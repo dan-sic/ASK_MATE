@@ -15,3 +15,21 @@ def get_question_by_id(id):
     for element in q_list:
         if element['id'] == id:
             return element
+
+
+def get_all_answers():
+    a_list = connection.read_file('answers.csv')
+    return a_list
+
+
+def get_answers_by_question_id(id):
+    a_list = connection.read_file('answers.csv')
+    new_a_list = []
+    for element in a_list:
+        if element['question_id'] == id:
+            new_a_list.append(element)
+    return new_a_list
+
+
+def save_new_answer(record):
+    connection.write_file(record, 'answers.csv')

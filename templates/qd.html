@@ -38,4 +38,15 @@
 <div class="container float-left" align="left">
     <a href="/question/{{ id }}/new-answer"><button type="button" class="btn btn-primary btn-lg active" role="button" aria-pressed="true">Answer that question</button></a>
 </div>
+<div class="container">
+    <h3>List of answers</h3>
+    {% for answer in answers %}
+        <table>
+            <tr>
+                <th>Answer</th>
+                <td>{{ answer['message'] }}</td>
+            </tr>
+        </table>
+    {% endfor %}
+</div>
 {% endblock %}
