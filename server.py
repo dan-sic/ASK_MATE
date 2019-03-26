@@ -20,7 +20,7 @@ def route_add():
     return render_template('form.html')
 
 
-@app.route('/story/<id>')
+@app.route('/add-question/<id>')
 def route_edit(id):
     cokolwiek = 'hello world' + id
     return cokolwiek

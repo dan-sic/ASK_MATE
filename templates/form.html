@@ -1,8 +1,23 @@
 {% extends "layout.html" %}
 {% block contents %}
-    <div>
-        <form action="/add" method="post">
-            <input id="id" >
-        </form>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6">
+                <form action="/add" method="post">
+                    <div>
+                        <h3>Add new Question</h3><br>
+                    </div>
+                    <div class="form-group mb-2">
+                        <label for="title">Title</label>
+                        <input type="title" class="form-control" id="title" placeholder="Enter Title">
+                    </div>
+                    <div class="form-group mb-2">
+                        <label for="description">Description</label>
+                        <textarea type="description" class="form-control" id="description" placeholder="Enter Title" rows="8"></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-primary mb-2">Submit</button>
+                </form>
+            </div>
+        </div>
     </div>
 {% endblock %}
