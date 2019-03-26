@@ -1,0 +1,33 @@
+{% extends "layout.html" %}
+{% block contents %}
+    <div class="container float-right" align="right">
+        <a href="/add"><button type="button" class="btn btn-primary btn-lg active" role="button" aria-pressed="true">Ask Question</button></a>
+    </div>
+    <div>
+        <br>
+    </div>
+    <div class="container">
+        <table class="table table-bordered">
+            <tr>
+                <th>ID</th>
+                <th>Title</th>
+                <th>Message</th>
+                <th>Submission Time</th>
+                <th>View Number</th>
+                <th>Vote Number</th>
+                <th>Image</th>
+            </tr>
+            {% for story in stories  %}
+            <tr>
+                <td>{{ story['id'] }} </td>
+                <td><a href="story/{{ story['id'] }}">{{ story['title'] }} </a></td>
+                <td>{{ story['message'] }} </td>
+                <td>{{ story['submission_time'] }} </td>
+                <td>{{ story['view_number'] }} </td>
+                <td>{{ story['vote_number'] }} </td>
+                <td>{{ story['image'] }} </td>
+            </tr>
+            {% endfor %}
+        </table>
+    </div>
+{% endblock %}
