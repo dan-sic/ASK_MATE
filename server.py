@@ -20,10 +20,31 @@ def route_add():
     return render_template('form.html')
 
 
+@app.route('/add', methods=['GET', 'POST'])
+def route_edit():
+    if request.method == 'POST':
+        current_file = data_manager.get_all_questions()
+        new_dict = {}
+        new_dict['id'] = str(int(current_file[0]['id']) + 1)
+        new_dict['title'] = request.form['title']
+        new_dict['message'] = request.form['description']
+        new_dict['submission_time'] = 'now'
+        new_dict['view_number'] = '1'
+        new_dict['vote_number'] = '1'
+        new_dict['image'] = ''
+        current_file.append(new_dict)
+        data_manager.save_new_question(current_file)
+        return redirect('/')
+    return render_template('form.html')
+
+
 @app.route('/add-question/<id>')
-def route_edit(id):
-    cokolwiek = 'hello world' + id
-    return cokolwiek
+def route_display_question(id):
+    try:
+        element = data_manager.get_question_by_id(id)
+        return render_template('qd.html', element=element)
+    except ValueError:
+        return redirect('/')
 
 
 if __name__ == "__main__":

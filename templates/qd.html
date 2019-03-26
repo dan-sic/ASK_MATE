@@ -1,4 +1,38 @@
 {% extends "layout.html" %}
 {% block contents %}
-
+<div class="container">
+    <h3>Question details</h3><br>
+</div>
+<div class="container">
+    <table class="table">
+        <tr>
+            <th>ID</th>
+            <td>{{ element['id'] }}</td>
+        </tr>
+        <tr>
+            <th>Title</th>
+            <td>{{ element['title'] }}</td>
+        </tr>
+        <tr>
+            <th>Message</th>
+            <td>{{ element['message'] }}</td>
+        </tr>
+        <tr>
+            <th>Submission</th>
+            <td>{{ element['submission_time'] }}</td>
+        </tr>
+        <tr>
+            <th>View Number</th>
+            <td>{{ element['view_number'] }}</td>
+        </tr>
+        <tr>
+            <th>Vote Number</th>
+            <td>{{ element['vote_number'] }}</td>
+        </tr>
+        <tr>
+            <th>Image</th>
+            <td>{{ element['image'] }}</td>
+        </tr>
+    </table>
+</div>
 {% endblock %}
