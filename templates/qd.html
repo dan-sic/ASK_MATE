@@ -43,10 +43,26 @@
     {% for answer in answers %}
         <table>
             <tr>
-                <th>Answer</th>
+                <th>Answer # {{ answer['id'] }}</th>
+            </tr>
+            <tr>
+                <th>Answer</th><br>
                 <td>{{ answer['message'] }}</td>
             </tr>
+            <tr>
+                <th>Submision Time</th><br>
+                <td>{{ answer['submission_time'] }}</td>
+            </tr>
+            <tr>
+                <th>Image</th><br>
+                <td>{{ answer['image'] }}</td>
+            </tr>
+            <tr>
+                <th>Votes</th><br>
+                <td>{{ answer['vote_number'] }}</td>
+            </tr>
         </table>
+        <hr>
     {% endfor %}
 </div>
 {% endblock %}
