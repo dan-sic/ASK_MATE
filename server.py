@@ -21,7 +21,7 @@ def route_add():
 
 
 @app.route('/add', methods=['GET', 'POST'])
-def route_edit():
+def route_add_question():
     if request.method == 'POST':
         current_file = data_manager.get_all_questions()
         new_dict = {}
@@ -39,12 +39,17 @@ def route_edit():
 
 
 @app.route('/add-question/<id>')
-def route_display_question(id):
+def route_question_detail(id):
     try:
         element = data_manager.get_question_by_id(id)
-        return render_template('qd.html', element=element)
+        return render_template('qd.html', element=element, id=id)
     except ValueError:
         return redirect('/')
+
+
+@app.route('/question/<id>/new-answer')
+def route_new_answer(id):
+    pass
 
 
 if __name__ == "__main__":
