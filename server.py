@@ -1,4 +1,5 @@
 from flask import Flask, render_template, request, redirect
+
 import data_manager
 
 app = Flask(__name__)
@@ -52,9 +53,6 @@ def route_new_answer(id):
         return redirect('/question_detail/' + id)
     return render_template('answer.html')
 
-
-@app.route()
-def vote_system():
 
 if __name__ == "__main__":
     app.run(
