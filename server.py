@@ -26,6 +26,20 @@ def route_add_question():
     return render_template('form.html', edit=edit, action=action)
 
 
+@app.route('/question/<question_id>/delete')
+def route_delete_question(question_id):
+    data_manager.delete_element("questions", question_id)
+    return redirect('/list')
+
+
+@app.route('/answer/<combined_id>/delete')
+def route_delete_answer(combined_id):
+    answer_id = combined_id.split('_')[0]
+    question_id = combined_id.split('_')[1]
+    data_manager.delete_element("answers", answer_id)
+    return redirect('/question_detail/' + question_id)
+
+
 @app.route('/question_detail/<id>')
 def route_question_detail(id):
     try:
@@ -52,7 +66,7 @@ def route_new_answer(id):
     if request.method == 'POST':
         data_manager.add_answer(request.form, id)
         return redirect('/question_detail/' + id)
-    return render_template('answer.html')
+    return render_template('answer.html', id=id)
 
 
 if __name__ == "__main__":

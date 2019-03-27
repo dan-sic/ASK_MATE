@@ -78,3 +78,15 @@ def add_answer(form_data, id):
     }
     answers.append(new_answer)
     connection.write_file(answers, 'answers.csv')
+
+
+def delete_element(element_type, element_id):
+    data = connection.read_file(f'{element_type}.csv')
+    updated_data = [data_element for data_element in data if data_element['id'] != element_id]
+    connection.write_file(updated_data, f'{element_type}.csv')
+
+    # if quesiton is deleted - also delete corresponding answers
+    if element_type == "questions":
+        answers = connection.read_file('answers.csv')
+        updated_answers = [answer for answer in answers if answer['question_id'] != element_id]
+        connection.write_file(updated_answers, 'answers.csv')

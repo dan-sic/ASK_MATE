@@ -105,3 +105,6 @@ ENV/
 
 # vscode files
 settings.json
+
+# database files
+data/

@@ -1,6 +1,6 @@
 {% extends "layout.html" %}
 {% block contents %}
-    <div class="container float-right" align="right">
+    <div class="container float-right">
         <a href="/add"><button type="button" class="btn btn-primary btn-lg active" role="button" aria-pressed="true">Ask Question</button></a>
     </div>
     <div>
@@ -9,13 +9,14 @@
     <div class="container">
         <table class="table table-bordered">
             <tr>
-                <th>ID</th>
+                <th>No.</th>
                 <th>Title</th>
                 <th>Message</th>
                 <th>Submission Time</th>
                 <th>View Number</th>
                 <th>Vote Number</th>
                 <th>Image</th>
+                <th></th>
             </tr>
             {% for question in questions  %}
             <tr>
@@ -26,6 +27,7 @@
                 <td>{{ question['view_number'] }} </td>
                 <td>{{ question['vote_number'] }} </td>
                 <td><img src="{{ question['image'] }}" alt="Example image" style="width:50px"></td>
+                <td><a href="/question/{{ question['id'] }}/delete"><i class="fas fa-trash"></i></a></td>
             </tr>
             {% endfor %}
         </table>
