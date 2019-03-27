@@ -43,6 +43,7 @@ def route_delete_answer(combined_id):
 @app.route('/question_detail/<id>')
 def route_question_detail(id):
     try:
+        data_manager.question_view_count_increase(id)
         question = data_manager.get_question_by_id(id)
         answers = data_manager.get_answers_by_question_id(id)
         number_of_answers = len(answers)
