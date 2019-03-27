@@ -49,6 +49,23 @@ def get_answers_by_question_id(id):
     return answers_to_question
 
 
+def question_view_count_increase(id):
+    questions = connection.read_file()
+    for question in questions:
+        if question['id'] == id:
+            question['view_number'] = str(int(question['view_number']) + 1)
+    connection.write_file(questions)
+
+
+def update_question(id, form_data):
+    questions = connection.read_file()
+    for question in questions:
+        if question['id'] == id:
+            question['title'] = form_data['title']
+            question['message'] = form_data['description']
+    connection.write_file(questions)
+
+
 def add_answer(form_data, id):
     answers = connection.read_file('answers.csv')
     new_answer = {
