@@ -47,20 +47,26 @@
                 <th>Answer # {{ answer['id'] }}</th>
             </tr>
             <tr>
-                <th>Answer</th><br>
+                <th>Answer</th>
                 <td>{{ answer['message'] }}</td>
             </tr>
             <tr>
-                <th>Submision Time</th><br>
+                <th>Submision Time</th>
                 <td>{{ answer['submission_time'] }}</td>
             </tr>
             <tr>
-                <th>Image</th><br>
+                <th>Image</th>
                 <td>{{ answer['image'] }}</td>
             </tr>
             <tr>
-                <th>Votes</th><br>
+                <th>Votes</th>
                 <td>{{ answer['vote_number'] }}</td>
+            </tr>
+            <tr>
+                <th>Vote system</th>
+                <td>
+                    <a href="/"><img src="/static/up.svg" alt="vote up" width="15" height="15"></a> <a href=""><img src="/static/down.svg" alt="vote down" width="15" height="15"> </a>
+                <td/>
             </tr>
         </table>
         <hr>

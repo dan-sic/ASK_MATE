@@ -53,6 +53,9 @@ def route_new_answer(id):
     return render_template('answer.html')
 
 
+@app.route()
+def vote_system():
+
 if __name__ == "__main__":
     app.run(
         debug=True,
