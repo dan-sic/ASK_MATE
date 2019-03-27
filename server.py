@@ -17,10 +17,12 @@ def route_list():
 
 @app.route('/add', methods=['GET', 'POST'])
 def route_add_question():
+    edit = False
+    action = '/add'
     if request.method == 'POST':
         data_manager.add_question(request.form)
         return redirect('/list')
-    return render_template('form.html')
+    return render_template('form.html', edit=edit, action=action)
 
 
 @app.route('/question_detail/<id>')
@@ -32,6 +34,17 @@ def route_question_detail(id):
         return render_template('qd.html', question=question, id=id, answers=answers)
     except ValueError:
         return redirect('/')
+
+
+@app.route('/question_detail/<id>/edit', methods=['POST', 'GET'])
+def route_question_edit(id):
+    edit = True
+    action = '/question_detail/' + id + '/edit'
+    question = data_manager.get_question_by_id(id)
+    if request.method == 'POST':
+        data_manager.update_question(id, request.form)
+        return redirect('/question_detail/' + id)
+    return render_template('form.html', edit=edit, question=question, id=id, action=action)
 
 
 @app.route('/question/<id>/new-answer', methods=['GET', 'POST'])

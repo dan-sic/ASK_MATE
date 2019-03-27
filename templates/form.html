@@ -3,17 +3,22 @@
     <div class="container">
         <div class="row">
             <div class="col-md-6">
-                <form action="/add" method="post">
+                <form action="{{ action }}" method="post">
                     <div>
-                        <h3>Add new Question</h3><br>
+                        {% if edit %}
+                        <h3>Edit question</h3><br>
+                        {% else %}
+                        <h3>Add a new Question</h3><br>
+                        {% endif %}
                     </div>
                     <div class="form-group mb-2">
                         <label for="title">Title</label>
-                        <input name="title" type="title" class="form-control" id="title" placeholder="Enter Title">
+                        <input name="title" type="title" class="form-control" id="title" value="{{ question['title'] if edit }}" placeholder="Enter Title">
                     </div>
                     <div class="form-group mb-2">
                         <label for="description">Description</label>
-                        <textarea type="description" name="description" class="form-control" id="description" placeholder="Enter the description" rows="8"></textarea>
+                        <textarea type="description" name="description" class="form-control" id="description" placeholder="Enter the description" rows="8">{{ question['message'] if edit }}
+                        </textarea>
                     </div>
                     <button type="submit" class="btn btn-primary mb-2">Submit</button>
                 </form>

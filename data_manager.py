@@ -60,4 +60,10 @@ def question_view_count_increase(id):
     connection.write_file(questions)
 
 
-
+def update_question(id, form_data):
+    questions = connection.read_file()
+    for question in questions:
+        if question['id'] == id:
+            question['title'] = form_data['title']
+            question['message'] = form_data['description']
+    connection.write_file(questions)
