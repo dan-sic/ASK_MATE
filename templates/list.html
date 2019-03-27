@@ -17,15 +17,15 @@
                 <th>Vote Number</th>
                 <th>Image</th>
             </tr>
-            {% for story in stories  %}
+            {% for question in questions  %}
             <tr>
-                <td>{{ story['id'] }} </td>
-                <td><a href="add-question/{{ story['id'] }}">{{ story['title'] }} </a></td>
-                <td>{{ story['message'] }} </td>
-                <td>{{ story['submission_time'] }} </td>
-                <td>{{ story['view_number'] }} </td>
-                <td>{{ story['vote_number'] }} </td>
-                <td>{{ story['image'] }} </td>
+                <td>{{ loop.index }} </td>
+                <td><a href="question_detail/{{ question['id'] }}">{{ question['title'] }} </a></td>
+                <td>{{ question['message'] }} </td>
+                <td>{{ question['submission_time'] }} </td>
+                <td>{{ question['view_number'] }} </td>
+                <td>{{ question['vote_number'] }} </td>
+                <td><img src="{{ question['image'] }}" alt="Example image" style="width:50px"></td>
             </tr>
             {% endfor %}
         </table>

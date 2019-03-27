@@ -5,33 +5,34 @@
 </div>
 <div class="container">
     <table class="table">
-        <tr>
+        <!-- I don't think we should display ID - it's for data management purposes -->
+        <!-- <tr>
             <th>ID</th>
-            <td>{{ element['id'] }}</td>
-        </tr>
+            <td>{{ question['id'] }}</td>
+        </tr> -->
         <tr>
             <th>Title</th>
-            <td>{{ element['title'] }}</td>
+            <td>{{ question['title'] }}</td>
         </tr>
         <tr>
             <th>Message</th>
-            <td>{{ element['message'] }}</td>
+            <td>{{ question['message'] }}</td>
         </tr>
         <tr>
             <th>Submission</th>
-            <td>{{ element['submission_time'] }}</td>
+            <td>{{ question['submission_time'] }}</td>
         </tr>
         <tr>
             <th>View Number</th>
-            <td>{{ element['view_number'] }}</td>
+            <td>{{ question['view_number'] }}</td>
         </tr>
         <tr>
             <th>Vote Number</th>
-            <td>{{ element['vote_number'] }}</td>
+            <td>{{ question['vote_number'] }}</td>
         </tr>
         <tr>
             <th>Image</th>
-            <td>{{ element['image'] }}</td>
+            <td><img src="{{ question['image'] }}" alt="Example image"></td>
         </tr>
     </table>
 </div>
