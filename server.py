@@ -45,7 +45,8 @@ def route_question_detail(id):
     try:
         question = data_manager.get_question_by_id(id)
         answers = data_manager.get_answers_by_question_id(id)
-        return render_template('qd.html', question=question, id=id, answers=answers)
+        number_of_answers = len(answers)
+        return render_template('qd.html', question=question, id=id, answers=answers, count=number_of_answers)
     except ValueError:
         return redirect('/')
 

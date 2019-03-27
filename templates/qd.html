@@ -1,74 +1,70 @@
 {% extends "layout.html" %}
 {% block contents %}
-<div class="container">
-    <h3>Question details</h3><br>
+<div class="container mb-4">
+    <div class="card">
+        <h1 class="card-header">Question detail</h1>
+        <div class="card-body">
+            <div class="float-right">
+                <img src="http://placehold.it/80" class="img-circle img-responsive d-block mb-2" alt="" />
+                <a href="" class="btn btn-primary btn-sm">Add Image</a>
+            </div>
+            <h2 class="card-title">{{ question['title'] }}</h2>
+            <div class="mb-5">
+                <p class="card-text lead">{{ question['message'] }}</p>
+            </div>
+            <small class="text-muted d-block">
+                Posted on: {{ question['submission_time'] }}
+            </small>
+            <small class="text-muted d-block">
+                Viewed: {{ question['view_number'] }} times
+            </small>
+            <div class="mt-4">
+                <a href="/question/{{ id }}/new-answer"><button type="button" class="btn btn-primary btn-md" role="button" aria-pressed="true">Answer that question</button></a>
+                <a href="/question_detail/{{ id }}/edit"><button type="button" class="btn btn-primary btn-md" role="button" aria-pressed="true">Edit that question</button></a>
+                <a href="/question/{{ id }}/delete"><button type="button" class="btn btn-danger btn-md" role="button" aria-pressed="true">Delete that question</button></a>
+                <div class="float-right mr-5 pt-3 align-bottom">
+                    <a href="" class="mr-2"><i class="fas fa-thumbs-up  text-success"></i></a>
+                    <a href="" class="mr-2"><i class="fas fa-thumbs-down text-danger"></i></a>
+                    Votes: {{ question['vote_number'] }}
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 <div class="container">
-    <table class="table">
-        <tr>
-            <th>Title</th>
-            <td>{{ question['title'] }}</td>
-        </tr>
-        <tr>
-            <th>Message</th>
-            <td>{{ question['message'] }}</td>
-        </tr>
-        <tr>
-            <th>Submission</th>
-            <td>{{ question['submission_time'] }}</td>
-        </tr>
-        <tr>
-            <th>View Number</th>
-            <td>{{ question['view_number'] }}</td>
-        </tr>
-        <tr>
-            <th>Vote Number</th>
-            <td>{{ question['vote_number'] }}</td>
-        </tr>
-        <tr>
-            <th>Image</th>
-            <td><img src="{{ question['image'] }}" alt="Example image"></td>
-        </tr>
-    </table>
-</div>
-<div class="container float-left">
-    <a href="/question/{{ id }}/new-answer"><button type="button" class="btn btn-primary btn-lg" role="button" aria-pressed="true">Answer that question</button></a>
-    <a href="/question_detail/{{ id }}/edit"><button type="button" class="btn btn-primary btn-lg" role="button" aria-pressed="true">Edit that question</button></a>
-    <a href="/question/{{ id }}/delete"><button type="button" class="btn btn-danger btn-lg" role="button" aria-pressed="true">Delete that question</button></a>
-</div>
-<div class="container">
-    <h3>List of answers</h3>
-    {% for answer in answers %}
-        <table>
-            <tr>
-                <th>Answer # {{ loop.index }}</th>
-            </tr>
-            <tr>
-                <th>Answer</th>
-                <td>{{ answer['message'] }}</td>
-            </tr>
-            <tr>
-                <th>Submision Time</th>
-                <td>{{ answer['submission_time'] }}</td>
-            </tr>
-            <tr>
-                <th>Image</th>
-                <td><img src="{{ question['image'] }}" alt="Example image"></td>
-            </tr>
-            <tr>
-                <th>Votes</th>
-                <td>{{ answer['vote_number'] }}</td>
-            </tr>
-            <tr>
-                <th>Vote system</th>
-                <td>
-                    <a href=""><img src="/static/up.svg" alt="vote up" width="16" height="16"></a>
-                    <a href=""><img src="/static/down.svg" alt="vote down" width="16" height="16"></a>
-                </td>
-            </tr>
-        </table>
-        <a href="/answer/{{ answer['id'] + '_' + question['id'] }}/delete"><i class="fas fa-trash"></i></a>
-        <hr>
-    {% endfor %}
+    <div class="list-group">
+        <div class="list-group-item bg-info text-white">
+            <i class="fas fa-comment mr-2 text-white"></i>Answers
+            <span class="badge badge-light float-right">{{ count }}</span>
+        </div>
+        {% for answer in answers %}
+
+        <div class="card list-group-item">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-auto">
+                        <img src="http://placehold.it/80" class="img-circle img-responsive mb-2" alt="" />
+                        <a href="" class="btn btn-primary btn-sm d-block">Add Image</a>
+                    </div>
+                    <div class="col-md-10">
+                        <div class="card-body">
+                                <a href="/answer/{{ answer['id'] + '_' + question['id'] }}/delete"><i class="fas fa-trash float-right text-danger"></i></a>
+                            <h5 class="card-title">Answer # {{ loop.index }}</h5>
+                            <p class="card-text">{{ answer['message'] }}</p>
+                            <small class="text-muted d-block mt-5">
+                                Posted on: {{ answer['submission_time'] }}
+                            </small>
+                            <div class="mt-2">
+                                <a href="" class="mr-2"><i class="fas fa-thumbs-up  text-success"></i></a>
+                                <a href="" class="mr-2"><i class="fas fa-thumbs-down text-danger"></i></a>
+                                Votes: {{ answer['vote_number'] }}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
 </div>
 {% endblock %}

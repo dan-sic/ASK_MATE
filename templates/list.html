@@ -1,35 +1,40 @@
 {% extends "layout.html" %}
 {% block contents %}
     <div class="container float-right">
-        <a href="/add"><button type="button" class="btn btn-primary btn-lg active" role="button" aria-pressed="true">Ask Question</button></a>
+        <a href="/add"><button type="button" class="btn btn-primary btn-lg mb-3" role="button">Ask Question</button></a>
     </div>
     <div>
         <br>
     </div>
     <div class="container">
         <table class="table table-bordered">
-            <tr>
-                <th>No.</th>
-                <th>Title</th>
-                <th>Message</th>
-                <th>Submission Time</th>
-                <th>View Number</th>
-                <th>Vote Number</th>
-                <th>Image</th>
-                <th></th>
-            </tr>
-            {% for question in questions  %}
-            <tr>
-                <td>{{ loop.index }} </td>
-                <td><a href="question_detail/{{ question['id'] }}">{{ question['title'] }} </a></td>
-                <td>{{ question['message'] }} </td>
-                <td>{{ question['submission_time'] }} </td>
-                <td>{{ question['view_number'] }} </td>
-                <td>{{ question['vote_number'] }} </td>
-                <td><img src="{{ question['image'] }}" alt="Example image" style="width:50px"></td>
-                <td><a href="/question/{{ question['id'] }}/delete"><i class="fas fa-trash"></i></a></td>
-            </tr>
-            {% endfor %}
+            <thead class="thead-dark">
+                <tr>
+                    <th>No.</th>
+                    <th>Title</th>
+                    <th>Message</th>
+                    <th>Submission Time</th>
+                    <th>View Number</th>
+                    <th>Vote Number</th>
+                    <th>Image</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for question in questions  %}
+                <tr>
+                    <td>{{ loop.index }} </td>
+                    <td><a href="question_detail/{{ question['id'] }}">{{ question['title'] }} </a></td>
+                    <td>{{ question['message'] }} </td>
+                    <td>{{ question['submission_time'] }} </td>
+                    <td>{{ question['view_number'] }} </td>
+                    <td>{{ question['vote_number'] }} </td>
+                    <!-- <td><img src="{{ question['image'] }}" alt="Example image" style="width:50px"></td> -->
+                    <td><img src="http://placehold.it/80" alt="Example image" style="width:50px"></td>
+                    <td><a href="/question/{{ question['id'] }}/delete"><i class="fas fa-trash text-danger"></i></a></td>
+                </tr>
+                {% endfor %}
+            </tbody>
         </table>
     </div>
 {% endblock %}
