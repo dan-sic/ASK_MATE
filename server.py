@@ -26,6 +26,7 @@ def route_add_question():
 @app.route('/question_detail/<id>')
 def route_question_detail(id):
     try:
+        data_manager.question_view_count_increase(id)
         question = data_manager.get_question_by_id(id)
         answers = data_manager.get_answers_by_question_id(id)
         return render_template('qd.html', question=question, id=id, answers=answers)

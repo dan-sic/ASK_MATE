@@ -50,3 +50,14 @@ def get_answers_by_question_id(id):
 
 def save_new_answer(record):
     connection.write_file(record, 'answers.csv')
+
+
+def question_view_count_increase(id):
+    questions = connection.read_file()
+    for question in questions:
+        if question['id'] == id:
+            question['view_number'] = str(int(question['view_number']) + 1)
+    connection.write_file(questions)
+
+
+
