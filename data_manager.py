@@ -90,3 +90,19 @@ def delete_element(element_type, element_id):
         answers = connection.read_file('answers.csv')
         updated_answers = [answer for answer in answers if answer['question_id'] != element_id]
         connection.write_file(updated_answers, 'answers.csv')
+
+
+def sort_questions(order_by, order_direction):
+    questions = connection.read_file()
+    sort_type = True if order_direction == 'asc' else False
+    sorted_questions = sorted(questions, key=lambda k: k[order_by], reverse=sort_type)
+    questions_with_proper_date_format = map(util.convert_time_value_to_formatted_string, sorted_questions)
+    return questions_with_proper_date_format
+
+
+
+
+
+
+
+

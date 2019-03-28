@@ -71,6 +71,14 @@ def route_new_answer(id):
     return render_template('answer.html', id=id)
 
 
+@app.route('/sort')
+def my_route():
+    feature_to_order_by = request.args.get('order_by', default = 'title', type = str)
+    order_direction = request.args.get('order_direction', default = 'asc', type = str)
+    questions = data_manager.sort_questions(feature_to_order_by, order_direction)
+    return render_template('list.html', questions=questions)
+
+
 if __name__ == "__main__":
     app.run(
         debug=True,
