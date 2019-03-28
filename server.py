@@ -6,7 +6,7 @@ from flask_uploads import UploadSet, configure_uploads, IMAGES
 app = Flask(__name__)
 photos = UploadSet('photos', IMAGES)
 
-app.config['UPLOADED_PHOTOS_DEST'] = 'images'
+app.config['UPLOADED_PHOTOS_DEST'] = 'static/images'
 configure_uploads(app, photos)
 
 
@@ -87,10 +87,19 @@ def my_route():
 @app.route('/upload', methods=['GET', 'POST'])
 def upload():
     if request.method == 'POST' and 'photo' in request.files:
-        id = request.args.get('id', type=str)
-        filename = photos.save(request.files['photo'])
-        data_manager.update_image_question(filename, id)
-        return redirect('/question_detail/' + id)
+        question_id = request.args.get('question_id', type=str)
+        answer_id = request.args.get('answer_id', type=str)
+
+        try:
+            filename = photos.save(request.files['photo'])
+        except:
+            return redirect('/question_detail/' + question_id)
+        
+        id = answer_id if answer_id else question_id
+        file_type = "answers" if answer_id else "questions"
+        
+        data_manager.update_image(filename, id, file_type)
+        return redirect('/question_detail/' + question_id)
     return redirect('/list')
 
 

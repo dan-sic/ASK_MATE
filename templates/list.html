@@ -8,7 +8,7 @@
     </div>
     <div class="container">
         <table class="table table-bordered">
-            <thead class="thead-dark">
+            <thead class="thead-light">
                 <tr>
                     <th><div class="pb-5">No.</div></th>
                     <th><div class="d-block pb-4">Title</div>
@@ -19,15 +19,15 @@
                         <a href="/sort?order_by=message&order_direction=asc" class=""><i class="fas fa-chevron-up"></i>
                         <a href="/sort?order_by=message&order_direction=desc" class=""><i class="fas fa-chevron-down"></i></a>
                     </th>
-                    <th><div class="d-block">Submission Time</div>
+                    <th><div class="d-block pb-4">Submission Time</div>
                         <a href="/sort?order_by=submission_time&order_direction=asc" class=""><i class="fas fa-chevron-up"></i>
                         <a href="/sort?order_by=submission_time&order_direction=desc" class=""><i class="fas fa-chevron-down"></i></a>
                     </th>
-                    <th>View Number
+                    <th><div class="pb-4">View Number</div>
                         <a href="/sort?order_by=view_number&order_direction=asc" class=""><i class="fas fa-chevron-up"></i>
                         <a href="/sort?order_by=view_number&order_direction=desc" class=""><i class="fas fa-chevron-down"></i></a>
                     </th>
-                    <th>Vote Number
+                    <th><div class="pb-4">Vote Number</div>
                         <a href="/sort?order_by=vote_number&order_direction=asc" class=""><i class="fas fa-chevron-up"></i>
                         <a href="/sort?order_by=vote_number&order_direction=desc" class=""><i class="fas fa-chevron-down"></i></a>
                     </th>
@@ -44,8 +44,11 @@
                     <td>{{ question['submission_time'] }} </td>
                     <td>{{ question['view_number'] }} </td>
                     <td>{{ question['vote_number'] }} </td>
-                    <!-- <td><img src="{{ question['image'] }}" alt="Example image" style="width:50px"></td> -->
-                    <td><img src="http://placehold.it/80" alt="Example image" style="width:50px"></td>
+                    {% if question['image'] %}
+                        <td><img src="/static/{{ question['image'] }}" alt="Example image" class="img-thumbnail" style="height:70px; width:auto;"></td> 
+                    {% else %}
+                        <td><img src="http://placehold.it/80" alt="Example image" class="img-thumbnail" style="height:70px; width:auto;"></td>
+                    {% endif %}
                     <td><a href="/question/{{ question['id'] }}/delete"><i class="fas fa-trash text-danger"></i></a></td>
                 </tr>
                 {% endfor %}
