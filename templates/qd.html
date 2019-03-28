@@ -65,8 +65,10 @@
             <tr>
                 <th>Vote system</th>
                 <td>
-                    <a href=""><img src="/static/up.svg" alt="vote up" width="16" height="16"></a> <a href=""><img
-                        src="/static/down.svg" alt="vote down" width="16" height="16"> </a>
+                    <a href="/qd/{{ answer['id'] }}/plus"><img alt="vote up" height="16" src="/static/up.svg"
+                                                               width="16"></a>
+                    <a href="/qd/{{ answer['id'] }}/minus"><img alt="vote down" height="16" src="/static/down.svg"
+                                                                width="16"> </a>
                 <td/>
             </tr>
         </table>

@@ -54,8 +54,27 @@ def route_new_answer(id):
     return render_template('answer.html')
 
 
+@app.route('/qd/<id>/minus', methods=['GET', 'POST'])
+def vote_system_minus(id):
+    all_answers = data_manager.get_all_answers()  # tu jest błąd
+    for answer in all_answers:
+        if id == answer['id']:
+            answer['vote_number'] = int(answer['vote_number']) - 1
+            data_manager.save_new_answer(all_answers)
+    return redirect('/list')
+
+
+@app.route('/qd/<id>/plus', methods=['GET', 'POST'])
+def vote_system_plus(id):
+    all_answers = data_manager.get_all_answers()  # tu jest błąd
+    for answer in all_answers:
+        if id == answer['id']:
+            answer['vote_number'] = int(answer['vote_number']) + 1
+            data_manager.save_new_answer(all_answers)
+    return redirect('/list')
+
+
 if __name__ == "__main__":
     app.run(
         debug=True,
-        port=5004
-)
+        port=5004)
