@@ -103,6 +103,31 @@ def upload():
     return redirect('/list')
 
 
+@app.route('/question/<question_id>/vote-down')
+def question_vote_down(question_id):
+    data_manager.change_vote("questions", question_id, -1)
+    return redirect('/question_detail/' + question_id)
+
+
+@app.route('/question/<question_id>/vote-up')
+def question_vote_up(question_id):
+    data_manager.change_vote("questions", question_id, 1)
+    return redirect('/question_detail/' + question_id)
+
+
+@app.route('/answer/<answer_id>/vote-down/<question_id>')
+def answer_vote_down(answer_id, question_id):
+    data_manager.change_vote("answers", answer_id, -1)
+    return redirect('/question_detail/' + question_id)
+
+
+# issue to talk about during code review - should we use POST method here
+@app.route('/answer/<answer_id>/vote-up/<question_id>')
+def answer_vote_up(answer_id, question_id):
+    data_manager.change_vote("answers", answer_id, 1)
+    return redirect('/question_detail/' + question_id)
+
+
 if __name__ == "__main__":
     app.run(
         debug=True,

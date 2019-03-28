@@ -38,8 +38,8 @@
                 <a href="/question_detail/{{ id }}/edit"><button type="button" class="btn btn-primary btn-md" role="button" aria-pressed="true">Edit that question</button></a>
                 <a href="/question/{{ id }}/delete"><button type="button" class="btn btn-danger btn-md" role="button" aria-pressed="true">Delete that question</button></a>
                 <div class="float-right mr-5 pt-3 align-bottom">
-                    <a href="" class="mr-2"><i class="fas fa-thumbs-up  text-success"></i></a>
-                    <a href="" class="mr-2"><i class="fas fa-thumbs-down text-danger"></i></a>
+                    <a href="/question/{{ id }}/vote-up" class="mr-2"><i class="fas fa-thumbs-up  text-success"></i></a>
+                    <a href="/question/{{ id }}/vote-down" class="mr-2"><i class="fas fa-thumbs-down text-danger"></i></a>
                     Votes: {{ question['vote_number'] }}
                 </div>
             </div>
@@ -79,8 +79,8 @@
                                 Posted on: {{ answer['submission_time'] }}
                             </small>
                             <div class="mt-2">
-                                <a href="" class="mr-2"><i class="fas fa-thumbs-up  text-success" style="margin:0;"></i></a>
-                                <a href="" class="mr-2"><i class="fas fa-thumbs-down text-danger" style="margin:0;"></i></a>
+                                <a href="/answer/{{ answer['id'] }}/vote-up/{{ question['id'] }}" class="mr-2"><i class="fas fa-thumbs-up  text-success" style="margin:0;"></i></a>
+                                <a href="/answer/{{ answer['id'] }}/vote-down/{{ question['id'] }}" class="mr-2"><i class="fas fa-thumbs-down text-danger" style="margin:0;"></i></a>
                                 Votes: {{ answer['vote_number'] }}
                             </div>
                         </div>

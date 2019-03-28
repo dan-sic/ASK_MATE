@@ -122,11 +122,19 @@ def sort_questions(order_by, order_direction):
     return questions_with_proper_date_format
 
 
-def update_image(filename, id, file_type):
+def update_image(file_type, filename, id):
     data = connection.read_file(f"{file_type}.csv")
     for element in data:
         if element['id'] == id:
             element['image'] = 'images/' + filename
+    connection.write_file(data, f"{file_type}.csv")
+
+
+def change_vote(file_type, id, change_step):
+    data = connection.read_file(f"{file_type}.csv")
+    for element in data:
+        if element['id'] == id:
+            element['vote_number'] = str(int(element['vote_number']) + change_step)
     connection.write_file(data, f"{file_type}.csv")
 
 
