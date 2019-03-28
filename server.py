@@ -88,8 +88,8 @@ def my_route():
 def upload():
     if request.method == 'POST' and 'photo' in request.files:
         id = request.args.get('id', type=str)
-        print('Function is triggering!')
         filename = photos.save(request.files['photo'])
+        data_manager.update_image_question(filename, id)
         return redirect('/question_detail/' + id)
     return redirect('/list')
 

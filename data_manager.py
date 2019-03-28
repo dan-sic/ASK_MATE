@@ -100,7 +100,12 @@ def sort_questions(order_by, order_direction):
     return questions_with_proper_date_format
 
 
-
+def update_image_question(filename, id):
+    questions = connection.read_file()
+    for question in questions:
+        if question['id'] == id:
+            question['image'] = 'images/' + filename
+    connection.write_file(questions)
 
 
 
