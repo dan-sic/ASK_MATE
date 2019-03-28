@@ -98,7 +98,7 @@ def upload():
         id = answer_id if answer_id else question_id
         file_type = "answers" if answer_id else "questions"
         
-        data_manager.update_image(filename, id, file_type)
+        data_manager.update_image(file_type, filename, id)
         return redirect('/question_detail/' + question_id)
     return redirect('/list')
 
