@@ -10,7 +10,9 @@ def read_file(filename="questions.csv"):
 
 
 def write_file(dict_list, filename="questions.csv"):
-    keys = dict_list[0].keys()
+    keys = ["id", "submission_time", "view_number", "vote_number", "title", "message", "image"]
+    if filename == 'answers.csv':
+        keys = ['id','submission_time','vote_number','question_id','message,image']
     file_directory = 'data/' + filename
     with open(file_directory, 'w') as f:
         writer = csv.DictWriter(f, keys)

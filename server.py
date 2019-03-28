@@ -1,8 +1,13 @@
 from flask import Flask, render_template, request, redirect
-
 import data_manager
+from flask_uploads import UploadSet, configure_uploads, IMAGES
+
 
 app = Flask(__name__)
+photos = UploadSet('photos', IMAGES)
+
+app.config['UPLOADED_PHOTOS_DEST'] = 'images'
+configure_uploads(app, photos)
 
 
 @app.route('/')
@@ -77,6 +82,16 @@ def my_route():
     order_direction = request.args.get('order_direction', default = 'asc', type = str)
     questions = data_manager.sort_questions(feature_to_order_by, order_direction)
     return render_template('list.html', questions=questions)
+
+
+@app.route('/upload', methods=['GET', 'POST'])
+def upload():
+    if request.method == 'POST' and 'photo' in request.files:
+        id = request.args.get('id', type=str)
+        print('Function is triggering!')
+        filename = photos.save(request.files['photo'])
+        return redirect('/question_detail/' + id)
+    return redirect('/list')
 
 
 if __name__ == "__main__":

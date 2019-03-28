@@ -6,7 +6,11 @@
         <div class="card-body">
             <div class="float-right">
                 <img src="http://placehold.it/80" class="img-circle img-responsive d-block mb-2" alt="" />
-                <a href="" class="btn btn-primary btn-sm">Add Image</a>
+                <form method=POST enctype=multipart/form-data action='/upload?id={{ question["id"] }}'>
+                    <input type="file" name="photo">
+                    <input type="submit">
+                    <a href="" class="btn btn-primary btn-sm">Add Image</a>
+                </form>
             </div>
             <h2 class="card-title">{{ question['title'] }}</h2>
             <div class="mb-5">
