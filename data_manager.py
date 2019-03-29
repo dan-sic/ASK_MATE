@@ -97,7 +97,6 @@ def delete_element(element_type, element_id):
     updated_data = [data_element for data_element in data if data_element['id'] != element_id]
     connection.write_file(updated_data, f'{element_type}.csv')
 
-
     # if question is deleted - also delete corresponding answers
     if element_type == "questions":
         answers = connection.read_file('answers.csv')
@@ -105,9 +104,12 @@ def delete_element(element_type, element_id):
         # delete answer's image
         img_paths_of_deleted_answers = [answer['image'] for answer in answers if answer['question_id'] == element_id]
         for img_path in img_paths_of_deleted_answers:
-            file_name = img_path.split("/")[1]
-            if file_name:
-                os.remove(f"static/images/{file_name}")
+            try:
+                file_name = img_path.split("/")[1]
+                if file_name:
+                    os.remove(f"static/images/{file_name}")
+            except IndexError:
+                pass
             
         # delete answer
         updated_answers = [answer for answer in answers if answer['question_id'] != element_id]

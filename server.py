@@ -68,9 +68,10 @@ def route_question_edit(id):
     return render_template('form.html', edit=edit, question=question, id=id, action=action)
 
 
-@app.route('/question/<id>/new-answer', methods=['GET', 'POST'])
+@app.route('/question/<str:id>/new-answer', methods=['GET', 'POST'])
 def route_new_answer(id):
     if request.method == 'POST':
+        # todo: check is question exists
         data_manager.add_answer(request.form, id)
         return redirect('/question_detail/' + id)
     return render_template('answer.html', id=id)
@@ -78,8 +79,8 @@ def route_new_answer(id):
 
 @app.route('/sort')
 def my_route():
-    feature_to_order_by = request.args.get('order_by', default = 'title', type = str)
-    order_direction = request.args.get('order_direction', default = 'asc', type = str)
+    feature_to_order_by = request.args.get('order_by', default='title', type=str)
+    order_direction = request.args.get('order_direction', default='asc', type=str)
     questions = data_manager.sort_questions(feature_to_order_by, order_direction)
     return render_template('list.html', questions=questions)
 

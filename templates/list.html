@@ -45,9 +45,9 @@
                     <td>{{ question['view_number'] }} </td>
                     <td>{{ question['vote_number'] }} </td>
                     {% if question['image'] %}
-                        <td><img src="/static/{{ question['image'] }}" alt="Example image" class="img-thumbnail" style="height:70px; width:auto;"></td> 
+                        <td><img src="/static/{{ question['image'] }}" alt="Example image" class="img-thumbnail" style="height:70px; width:70px;"></td> 
                     {% else %}
-                        <td><img src="http://placehold.it/80" alt="Example image" class="img-thumbnail" style="height:70px; width:auto;"></td>
+                        <td><img src="http://placehold.it/80" alt="Example image" class="img-thumbnail" style="height:70px; width:70px;"></td>
                     {% endif %}
                     <td><a href="/question/{{ question['id'] }}/delete"><i class="fas fa-trash text-danger"></i></a></td>
                 </tr>
