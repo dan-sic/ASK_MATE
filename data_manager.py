@@ -140,6 +140,12 @@ def change_vote(file_type, id, change_step):
     connection.write_file(data, f"{file_type}.csv")
 
 
+def add_question_sql(data):
+    id = uuid.uuid4()
+    query = f"INSERT INTO questions (id, vote_number, view_number, title, message) " \
+            f"VALUES ('{id}', 0, 1, '{data['title']}', '{data['description']}');"
+    connection.connect_sql(query)
+
 
 
 

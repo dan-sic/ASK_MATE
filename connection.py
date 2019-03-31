@@ -1,4 +1,5 @@
 import csv
+import psycopg2
 
 
 def read_file(filename="questions.csv"):
@@ -18,3 +19,23 @@ def write_file(dict_list, filename="questions.csv"):
         writer = csv.DictWriter(f, keys)
         writer.writeheader()
         writer.writerows(dict_list)
+
+
+def connect_sql(query):
+    try:
+        user_name = "postgres"
+        password = ""
+        host = "localhost"
+        database_name = "askmate"
+
+        connect_str = f"postgresql://{user_name}:{password}@{host}/{database_name}"
+        connection = psycopg2.connect(connect_str)
+        connection.autocommit = True
+        cursor = connection.cursor()
+        cursor.execute(query)
+        results = cursor.fetchall()
+        cursor.close()
+        print(results)
+
+    except psycopg2.DatabaseError as exception:
+        print(exception)

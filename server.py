@@ -26,7 +26,7 @@ def route_add_question():
     edit = False
     action = '/add'
     if request.method == 'POST':
-        data_manager.add_question(request.form)
+        data_manager.add_question_sql(request.form)
         return redirect('/list')
     return render_template('form.html', edit=edit, action=action)
 
@@ -67,7 +67,7 @@ def route_question_edit(id):
         return redirect('/question_detail/' + id)
     return render_template('form.html', edit=edit, question=question, id=id, action=action)
 
-
+'''
 @app.route('/question/<str:id>/new-answer', methods=['GET', 'POST'])
 def route_new_answer(id):
     if request.method == 'POST':
@@ -75,7 +75,7 @@ def route_new_answer(id):
         data_manager.add_answer(request.form, id)
         return redirect('/question_detail/' + id)
     return render_template('answer.html', id=id)
-
+'''
 
 @app.route('/sort')
 def my_route():
