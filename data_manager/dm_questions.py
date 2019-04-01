@@ -4,26 +4,21 @@ import time
 import util
 
 
-def get_all_questions():
-    questions = connection.read_file()
-    sorted_questions = sorted(questions, key=lambda k: k['submission_time'], reverse=True)
-    questions_with_proper_date_format = map(util.convert_time_value_to_formatted_string, sorted_questions)
-    return questions_with_proper_date_format
+def convert_query_to_dictionary(query):
+    keys = ['id', 'submission_time', 'vote_number', 'view_number', 'title', 'message', 'image']
+    result = []
+    for element in query:
+        new_zip = zip(keys, element)
+        new_dictionary = dict(new_zip)
+        result.append(new_dictionary)
+    return result
 
 
-def add_question(form_data):
-    questions = connection.read_file()
-    new_question = {
-        'id': uuid.uuid4(),
-        'title': form_data['title'],
-        'message': form_data['description'],
-        'submission_time': time.time(),
-        'view_number': 0,
-        'vote_number': 0,
-        'image': None
-    }
-    questions.append(new_question)
-    connection.write_file(questions, 'questions.csv')
+def get_all_questions_sql_sorted_by_submission_time():
+    query = connection.connect_sql("""SELECT * FROM questions ORDER BY submission_time DESC;""")
+    result = convert_query_to_dictionary(query)
+    print('this is query: ',result)
+    return result
 
 
 def get_question_by_id(id):
@@ -61,6 +56,6 @@ def sort_questions(order_by, order_direction):
 
 def add_question_sql(data):
     id = uuid.uuid4()
-    query = f"INSERT INTO questions (id, vote_number, view_number, title, message) " \
-            f"VALUES ('{id}', 0, 1, '{data['title']}', '{data['description']}');"
+    query = f"""INSERT INTO questions (id, vote_number, view_number, title, message) """ \
+            f"""VALUES ('{id}', 0, 1, '{data['title']}', '{data['description']}');"""
     connection.connect_sql(query)

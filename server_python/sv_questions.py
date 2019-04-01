@@ -5,7 +5,7 @@ from flask import request, redirect, render_template
 
 @app.route('/list')
 def route_list():
-    questions = dm_questions.get_all_questions()
+    questions = dm_questions.get_all_questions_sql_sorted_by_submission_time()
     return render_template('list.html', questions=questions)
 
 

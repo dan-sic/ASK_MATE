@@ -34,8 +34,9 @@ def connect_sql(query):
         cursor = connection.cursor()
         cursor.execute(query)
         results = cursor.fetchall()
-        cursor.close()
         print(results)
+        cursor.close()
+        return results
 
     except psycopg2.DatabaseError as exception:
         print(exception)
