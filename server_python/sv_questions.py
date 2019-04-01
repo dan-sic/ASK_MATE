@@ -50,9 +50,9 @@ def route_question_detail(id):
 def route_question_edit(id):
     edit = True
     action = '/question_detail/' + id + '/edit'
-    question = dm_questions.get_question_by_id(id)
+    question = dm_questions.get_question_sql_by_id(id)
     if request.method == 'POST':
-        dm_questions.update_question(id, request.form)
+        dm_questions.update_question_sql(id, request.form)
         return redirect('/question_detail/' + id)
     return render_template('form.html', edit=edit, question=question, id=id, action=action)
 
