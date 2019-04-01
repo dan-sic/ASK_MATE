@@ -38,7 +38,7 @@ def route_question_detail(id):
     try:
         if request.method == 'GET':
             dm_questions.question_view_count_increase(id)
-        question = dm_questions.get_question_by_id(id)
+        question = dm_questions.get_question_sql_by_id(id)
         answers = dm_answers.get_answers_by_question_id(id)
         number_of_answers = len(answers)
         return render_template('qd.html', question=question, id=id, answers=answers, count=number_of_answers)

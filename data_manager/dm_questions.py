@@ -11,6 +11,7 @@ def convert_query_to_dictionary(query):
         new_zip = zip(keys, element)
         new_dictionary = dict(new_zip)
         result.append(new_dictionary)
+    print(result)
     return result
 
 
@@ -19,6 +20,13 @@ def get_all_questions_sql_sorted_by_submission_time():
     result = convert_query_to_dictionary(query)
     print('this is query: ',result)
     return result
+
+
+def get_question_sql_by_id(id):
+    query = connection.connect_sql(f"""SELECT * FROM questions WHERE id = '{id}'""")
+    formatted_question = query
+    result = convert_query_to_dictionary(formatted_question)
+    return result[0]
 
 
 def get_question_by_id(id):
