@@ -13,7 +13,7 @@ def route_list():
 def route_sort_questions():
     feature_to_order_by = request.args.get('order_by', default='title', type=str)
     order_direction = request.args.get('order_direction', default='asc', type=str)
-    questions = dm_questions.sort_questions(feature_to_order_by, order_direction)
+    questions = dm_questions.get_questions_sorted(feature_to_order_by, order_direction)
     return render_template('list.html', questions=questions)
 
 
@@ -37,7 +37,7 @@ def route_delete_question(question_id):
 def route_question_detail(id):
     try:
         if request.method == 'GET':
-            dm_questions.question_view_count_increase(id)
+            dm_questions.update_question_view_increase_count(id)
         question = dm_questions.get_question_sql_by_id(id)
         answers = dm_answers.get_answers_by_question_id(id)
         number_of_answers = len(answers)

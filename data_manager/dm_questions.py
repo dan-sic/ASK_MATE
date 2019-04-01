@@ -5,7 +5,7 @@ import util
 
 
 def convert_query_to_dictionary(query):
-    keys = ['id', 'submission_time', 'vote_number', 'view_number', 'title', 'message', 'image']
+    keys = ['id', 'submission_time', 'view_number', 'vote_number', 'title', 'message', 'image']
     result = []
     for element in query:
         new_zip = zip(keys, element)
@@ -18,7 +18,6 @@ def convert_query_to_dictionary(query):
 def get_all_questions_sql_sorted_by_submission_time():
     query = connection.connect_sql("""SELECT * FROM questions ORDER BY submission_time DESC;""")
     result = convert_query_to_dictionary(query)
-    print('this is query: ',result)
     return result
 
 
@@ -44,17 +43,16 @@ def update_question_sql(id, form_data):
                             """)
 
 
-def sort_questions(order_by, order_direction):
-    questions = connection.read_file()
-    sort_type = True if order_direction == 'asc' else False
-    sorted_questions = sorted(questions, key=lambda k: k[order_by], reverse=sort_type)
-    questions_with_proper_date_format = map(util.convert_time_value_to_formatted_string, sorted_questions)
-    return questions_with_proper_date_format
+def get_questions_sorted(order_by, order_direction):
+    query = connection.connect_sql(f"""SELECT * FROM questions ORDER BY {order_by} {order_direction};""")
+    result = convert_query_to_dictionary(query)
+    return result
 
 
-def question_view_count_increase(id):
-    questions = connection.read_file()
-    for question in questions:
-        if question['id'] == id:
-            question['view_number'] = str(int(question['view_number']) + 1)
-    connection.write_file(questions)
+def update_question_view_increase_count(id):
+    connection.connect_sql(f"""UPDATE questions
+                                    SET view_number = view_number + 1
+                                    WHERE id = '{id}' """)
+
+
+

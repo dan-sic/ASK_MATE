@@ -41,3 +41,20 @@ def update_question(id, form_data):
             question['title'] = form_data['title']
             question['message'] = form_data['description']
     connection.write_file(questions)
+
+
+def sort_questions(order_by, order_direction):
+    questions = connection.read_file()
+    sort_type = True if order_direction == 'asc' else False
+    sorted_questions = sorted(questions, key=lambda k: k[order_by], reverse=sort_type)
+    questions_with_proper_date_format = map(util.convert_time_value_to_formatted_string, sorted_questions)
+    return questions_with_proper_date_format
+
+
+def question_view_count_increase(id):
+    questions = connection.read_file()
+    for question in questions:
+        if question['id'] == id:
+            question['view_number'] = str(int(question['view_number']) + 1)
+    connection.write_file(questions)
+
