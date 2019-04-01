@@ -12,4 +12,40 @@
         </div>
     </div>
 </div>
+<div class="container">
+    <div>
+        <table class="table table-bordered">
+            <thead class="thead-light">
+                <tr>
+                    <th><div class="pb">No.</div></th>
+                    <th><div class="d-block pb">Title</div></th>
+                    <th><div class="d-block pb">Message</div></th>
+                    <th><div class="d-block pb">Submission Time</div></th>
+                    <th><div class="pb">View Number</div></th>
+                    <th><div class="pb">Vote Number</div></th>
+                    <th><div class="pb">Image</div></th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for question in questions  %}
+                <tr>
+                    <td>{{ loop.index }} </td>
+                    <td><a href="question_detail/{{ question['id'] }}">{{ question['title'] }} </a></td>
+                    <td>{{ question['message'] }} </td>
+                    <td>{{ question['submission_time'] }} </td>
+                    <td>{{ question['view_number'] }} </td>
+                    <td>{{ question['vote_number'] }} </td>
+                    {% if question['image'] %}
+                        <td><img src="/static/{{ question['image'] }}" alt="Example image" class="img-thumbnail" style="height:70px; width:70px;"></td>
+                    {% else %}
+                        <td><img src="http://placehold.it/80" alt="Example image" class="img-thumbnail" style="height:70px; width:70px;"></td>
+                    {% endif %}
+                    <td><a href="/question/{{ question['id'] }}/delete"><i class="fas fa-trash text-danger"></i></a></td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
 {% endblock %}

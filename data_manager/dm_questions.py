@@ -21,6 +21,12 @@ def get_all_questions_sql_sorted_by_submission_time():
     return result
 
 
+def get_5_questions_sql_sorted_by_submission_time():
+    query = connection.connect_sql("""SELECT * FROM questions ORDER BY submission_time DESC LIMIT 5;""")
+    result = convert_query_to_dictionary(query)
+    return result
+
+
 def get_questions_sorted(order_by, order_direction):
     query = connection.connect_sql(f"""SELECT * FROM questions ORDER BY {order_by} {order_direction};""")
     result = convert_query_to_dictionary(query)
@@ -56,3 +62,5 @@ def update_question_view_increase_count(id):
 
 
 
+def update_questions():
+    pass
