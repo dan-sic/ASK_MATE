@@ -39,7 +39,7 @@ def route_question_detail(id):
         if request.method == 'GET':
             dm_questions.update_question_view_increase_count(id)
         question = dm_questions.get_question_sql_by_id(id)
-        answers = dm_answers.get_answers_by_question_id(id)
+        answers = dm_answers.get_all_sql_answers_by_question_id(id)
         number_of_answers = len(answers)
         return render_template('qd.html', question=question, id=id, answers=answers, count=number_of_answers)
     except ValueError:

@@ -21,6 +21,12 @@ def get_all_questions_sql_sorted_by_submission_time():
     return result
 
 
+def get_questions_sorted(order_by, order_direction):
+    query = connection.connect_sql(f"""SELECT * FROM questions ORDER BY {order_by} {order_direction};""")
+    result = convert_query_to_dictionary(query)
+    return result
+
+
 def get_question_sql_by_id(id):
     query = connection.connect_sql(f"""SELECT * FROM questions WHERE id = '{id}'""")
     formatted_question = query
@@ -41,12 +47,6 @@ def update_question_sql(id, form_data):
                             SET  title = '{form_data['title']}', message = '{form_data['description']}' 
                             WHERE id = '{id}'; 
                             """)
-
-
-def get_questions_sorted(order_by, order_direction):
-    query = connection.connect_sql(f"""SELECT * FROM questions ORDER BY {order_by} {order_direction};""")
-    result = convert_query_to_dictionary(query)
-    return result
 
 
 def update_question_view_increase_count(id):

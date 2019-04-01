@@ -5,30 +5,34 @@ import util
 import os
 
 
-def get_all_answers():
-    a_list = connection.read_file('answers.csv')
-    return a_list
+def convert_query_to_dictionary(query):
+    keys = ['id', 'submission_time', 'vote_number', 'question_id', 'message', 'image']
+    result = []
+    for element in query:
+        new_zip = zip(keys, element)
+        new_dictionary = dict(new_zip)
+        result.append(new_dictionary)
+    print(result)
+    return result
 
 
-def get_answers_by_question_id(id):
-    answers = connection.read_file('answers.csv')
-    answers_to_question = []
-    for answer in answers:
-        if answer['question_id'] == id:
-            answer_with_proper_date_format = util.convert_time_value_to_formatted_string(answer)
-            answers_to_question.append(answer_with_proper_date_format)
-    return answers_to_question
+def get_all_sql_answers():
+    query = connection.connect_sql("""SELECT * FROM answers""")
+    results = convert_query_to_dictionary(query)
+    return results
 
 
-def add_answer(form_data, id):
-    answers = connection.read_file('answers.csv')
-    new_answer = {
-        'id': uuid.uuid4(),
-        'submission_time': time.time(),
-        'vote_number': 0,
-        'question_id': id,
-        'message': form_data['answer'],
-        'image': None
-    }
-    answers.append(new_answer)
-    connection.write_file(answers, 'answers.csv')
+def get_all_sql_answers_by_question_id(id):
+    query = connection.connect_sql(f"""SELECT * FROM answers WHERE question_id = '{id}' """)
+    print(id)
+    results = convert_query_to_dictionary(query)
+    print('to są wynii',results)
+    return results
+
+
+def add_sql_answer(form_data, question_id):
+    id = uuid.uuid4()
+    print('dione?')
+    query = (f"""INSERT INTO answers (id, vote_number, question_id, message)
+                            VALUES ('{id}', 0, '{question_id}', '{form_data['answer']}') """)
+    connection.connect_sql(query)

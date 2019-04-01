@@ -1,6 +1,6 @@
 from server_python.config import app
 from data_manager import dm_general, dm_answers
-from flask import redirect
+from flask import redirect, request, render_template
 
 
 @app.route('/answer/<combined_id>/delete')
@@ -11,15 +11,12 @@ def route_delete_answer(combined_id):
     return redirect('/question_detail/' + question_id)
 
 
-'''
-@app.route('/question/<str:id>/new-answer', methods=['GET', 'POST'])
+@app.route('/question/<id>/new-answer', methods=['GET', 'POST'])
 def route_new_answer(id):
     if request.method == 'POST':
-        # todo: check is question exists
-        data_manager.add_answer(request.form, id)
+        dm_answers.add_sql_answer(request.form, id)
         return redirect('/question_detail/' + id)
     return render_template('answer.html', id=id)
-'''
 
 
 @app.route('/answer/<answer_id>/vote-down/<question_id>')
