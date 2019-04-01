@@ -3,11 +3,6 @@ from data_manager import dm_general
 from flask import request, redirect, render_template
 
 
-@app.route('/')
-def route_home():
-    return render_template('/index.html')
-
-
 @app.route('/upload', methods=['GET', 'POST'])
 def upload():
     if request.method == 'POST' and 'photo' in request.files:

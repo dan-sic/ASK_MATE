@@ -13,12 +13,14 @@ def convert_query_to_dictionary(query):
         result.append(new_dictionary)
     print(result)
     return result
+    #[{}, {}]
 
 
 def get_all_questions_sql_sorted_by_submission_time():
     query = connection.connect_sql("""SELECT * FROM questions ORDER BY submission_time DESC;""")
     result = convert_query_to_dictionary(query)
     return result
+    #[(), ()]
 
 
 def get_5_questions_sql_sorted_by_submission_time():

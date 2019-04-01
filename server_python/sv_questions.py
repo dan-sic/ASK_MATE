@@ -3,6 +3,12 @@ from data_manager import dm_general, dm_questions, dm_answers
 from flask import request, redirect, render_template
 
 
+@app.route('/')
+def route_home():
+    questions = dm_questions.get_5_questions_sql_sorted_by_submission_time()
+    return render_template('/index.html', questions=questions)
+
+
 @app.route('/list')
 def route_list():
     questions = dm_questions.get_all_questions_sql_sorted_by_submission_time()
