@@ -1,10 +1,8 @@
 import connection
-import uuid
-import time
 import util
 import os
 
-
+# todo > delete element in SQL
 def delete_element(element_type, element_id):
 
     # delete file if exists
@@ -39,7 +37,7 @@ def delete_element(element_type, element_id):
         updated_answers = [answer for answer in answers if answer['question_id'] != element_id]
         connection.write_file(updated_answers, 'answers.csv')
 
-
+# todo > saving images and updating
 def update_image(file_type, filename, id):
     data = connection.read_file(f"{file_type}.csv")
     for element in data:
@@ -48,15 +46,13 @@ def update_image(file_type, filename, id):
     connection.write_file(data, f"{file_type}.csv")
 
 
-def change_vote(file_type, id, change_step):
-    data = connection.read_file(f"{file_type}.csv")
-    for element in data:
-        if element['id'] == id:
-            element['vote_number'] = str(int(element['vote_number']) + change_step)
-    connection.write_file(data, f"{file_type}.csv")
-
-
-
+@connection.connection_handler
+def change_vote(cursor, table, id, change_step):
+    cursor.execute(f"""
+                    UPDATE {table}
+                    SET vote_number = vote_number + {change_step}
+                    WHERE id = {id}
+                    """)
 
 
 

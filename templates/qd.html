@@ -72,7 +72,7 @@
                     </div>
                     <div class="col-md-11">
                         <div>
-                                <a href="/answer/{{ answer['id'] + '_' + question['id'] }}/delete"><i class="fas fa-trash float-right pt-3 text-danger"></i></a>
+                                <a href="/answer/delete?answer_id={{ answer['id'] }}&question_id={{ id }}"><i class="fas fa-trash float-right pt-3 text-danger"></i></a>
                             <h5 class="card-title">Answer # {{ loop.index }}</h5>
                             <p class="card-text">{{ answer['message'] }}</p>
                             <small class="text-muted d-block mt-5">

@@ -1,38 +1,24 @@
-import connection
-import uuid
-import time
+from connection import connection_handler
+import datetime
 import util
 import os
 
 
-def convert_query_to_dictionary(query):
-    keys = ['id', 'submission_time', 'vote_number', 'question_id', 'message', 'image']
-    result = []
-    for element in query:
-        new_zip = zip(keys, element)
-        new_dictionary = dict(new_zip)
-        result.append(new_dictionary)
-    print(result)
-    return result
+@connection_handler
+def get_all_sql_answers_by_question_id(cursor, question_id):
+    # todo: check if it will also work with f strings
+    cursor.execute("""
+                    SELECT * FROM answer WHERE question_id=%(question_id)s
+                    """,
+                    {"question_id": question_id})
+    answers = cursor.fetchall()
+    return answers
 
 
-def get_all_sql_answers():
-    query = connection.connect_sql("""SELECT * FROM answers""")
-    results = convert_query_to_dictionary(query)
-    return results
-
-
-def get_all_sql_answers_by_question_id(id):
-    query = connection.connect_sql(f"""SELECT * FROM answers WHERE question_id = '{id}' """)
-    print(id)
-    results = convert_query_to_dictionary(query)
-    print('to są wynii',results)
-    return results
-
-
-def add_sql_answer(form_data, question_id):
-    id = uuid.uuid4()
-    print('dione?')
-    query = (f"""INSERT INTO answers (id, vote_number, question_id, message)
-                            VALUES ('{id}', 0, '{question_id}', '{form_data['answer']}') """)
-    connection.connect_sql(query)
+@connection_handler
+def add_sql_answer(cursor, form_data, question_id):
+    time = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+    cursor.execute(f"""
+                    INSERT INTO answer (submission_time, vote_number, question_id, message) \
+                    VALUES ('{time}', 0, '{question_id}', '{form_data['answer']}')
+                    """)

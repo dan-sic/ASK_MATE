@@ -1,5 +1,7 @@
+import os
 import csv
 import psycopg2
+import psycopg2.extras
 
 
 def read_file(filename="questions.csv"):
@@ -21,22 +23,47 @@ def write_file(dict_list, filename="questions.csv"):
         writer.writerows(dict_list)
 
 
-def connect_sql(query):
+def get_connection_string():
+    # setup connection string
+    # to do this, please define these environment variables first
+    user_name = os.environ.get('PSQL_USER_NAME')
+    password = os.environ.get('PSQL_PASSWORD')
+    host = os.environ.get('PSQL_HOST')
+    database_name = os.environ.get('PSQL_DB_NAME')
+
+    env_variables_defined = user_name and password and host and database_name
+
+    if env_variables_defined:
+        # this string describes all info for psycopg2 to connect to the database
+        return 'postgresql://{user_name}:{password}@{host}/{database_name}'.format(
+            user_name=user_name,
+            password=password,
+            host=host,
+            database_name=database_name
+        )
+    else:
+        raise KeyError('Some necessary environment variable(s) are not defined')
+
+
+def open_database():
     try:
-        user_name = "postgres"
-        password = ""
-        host = "localhost"
-        database_name = "askmate"
-
-        connect_str = f"postgresql://{user_name}:{password}@{host}/{database_name}"
-        connection = psycopg2.connect(connect_str)
+        connection_string = get_connection_string()
+        connection = psycopg2.connect(connection_string)
         connection.autocommit = True
-        cursor = connection.cursor()
-        cursor.execute(query)
-        results = cursor.fetchall()
-        print(results)
-        cursor.close()
-        return results
-
     except psycopg2.DatabaseError as exception:
-        print(exception)
+        print('Database connection problem')
+        raise exception
+    return connection
+
+
+def connection_handler(function):
+    def wrapper(*args, **kwargs):
+        connection = open_database()
+        # we set the cursor_factory parameter to return with a RealDictCursor cursor (cursor which provide dictionaries)
+        dict_cur = connection.cursor(cursor_factory=psycopg2.extras.RealDictCursor)
+        ret_value = function(dict_cur, *args, **kwargs)
+        dict_cur.close()
+        connection.close()
+        return ret_value
+
+    return wrapper
