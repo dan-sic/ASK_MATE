@@ -18,8 +18,10 @@ def route_list():
 @app.route('/sort')
 def route_sort_questions():
     feature_to_order_by = request.args.get('order_by', default='title', type=str)
+    # todo > everywhere we receive user input - evein in URL - make checks if parameters exist
+    # if feature_to_order_by not in ['title', 'message']:
+    #     return 'Error: wrong parameter'
     order_direction = request.args.get('order_direction', default='asc', type=str)
-    print(f"order direction from route: {order_direction}")
     questions = dm_questions.get_questions_sorted(feature_to_order_by, order_direction)
     return render_template('list.html', questions=questions)
 
@@ -35,7 +37,7 @@ def route_add_question():
 
 @app.route('/question/<question_id>/delete')
 def route_delete_question(question_id):
-    dm_general.delete_element("questions", question_id)
+    dm_questions.delete_question(question_id)
     return redirect('/list')
 
 

@@ -1,5 +1,5 @@
 from connection import connection_handler
-from psycopg2 import sql
+from data_manager import dm_general
 import datetime
 
 
@@ -40,14 +40,11 @@ def get_question_sql_by_id(cursor, id):
 @connection_handler
 def add_question_sql(cursor, form_data):
     time = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-    # to check > why we need extra quotes around expressions?
-    #  to check > how to process this with sql.SQL?
-    #  to check > how to validate user input?
-    # to check > should we only validate input from direct user input, or also URL strings?
-    cursor.execute(f"""
-                    INSERT INTO question (submission_time, view_number, vote_number, title, message) \
-                    VALUES ('{time}', 0, 0, '{form_data['title']}', '{form_data['message']}')
-                    """)
+    # todo > in every data manager > queries need to be remade in a safe way > like below, without f strings
+    cursor.execute("""
+                    INSERT INTO question (submission_time, view_number, vote_number, title, message)
+                    VALUES (%(time)s, 0, 0, %(title)s, %(message)s)
+                    """, {'time': time, 'title': form_data['title'], 'message': form_data['message']})
 
 
 @connection_handler
@@ -66,4 +63,22 @@ def update_question_view_increase_count(cursor, id):
                     SET view_number = view_number + 1
                     WHERE id = '{id}'
                     """)
+
+
+@connection_handler
+def delete_question(cursor, id):
+    # delete question image if exists
+    dm_general.remove_image('question', id)
+
+    # delete question and all related data
+    cursor.execute(
+                # todo > check why there need to be semicolon in the query
+                f"""
+            DELETE FROM comment WHERE question_id={id};
+            DELETE FROM comment WHERE answer_id IN (SELECT id FROM answer WHERE question_id={id});
+            DELETE FROM answer WHERE question_id={id};
+            DELETE FROM question_tag WHERE question_id={id};
+            DELETE FROM question WHERE id={id};
+                """
+            )
 

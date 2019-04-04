@@ -1,7 +1,7 @@
 {% extends "layout.html" %}
 {% block contents %}
     <div class="container float-right">
-        <a href="/add"><button type="button" class="btn btn-primary btn-lg mb-3" role="button">Ask Question</button></a>
+        <a href={{ url_for('route_add_question') }}><button type="button" class="btn btn-primary btn-lg mb-3" role="button">Ask Question</button></a>
     </div>
     <div>
         <br>
@@ -12,24 +12,24 @@
                 <tr>
                     <th><div class="pb-5">No.</div></th>
                     <th><div class="d-block pb-4">Title</div>
-                        <a href="/sort?order_by=title&order_direction=asc" class=""><i class="fas fa-chevron-up"></i>
-                        <a href="/sort?order_by=title&order_direction=desc" class=""><i class="fas fa-chevron-down"></i></a>
+                        <a href="{{ url_for('route_sort_questions', order_by='title', order_direction='asc') }}"><i class="fas fa-chevron-up"></i>
+                        <a href="{{ url_for('route_sort_questions', order_by='title', order_direction='desc') }}"><i class="fas fa-chevron-down"></i></a>
                     </th>
                     <th><div class="d-block pb-4">Message</div>
-                        <a href="/sort?order_by=message&order_direction=asc" class=""><i class="fas fa-chevron-up"></i>
-                        <a href="/sort?order_by=message&order_direction=desc" class=""><i class="fas fa-chevron-down"></i></a>
+                        <a href="{{ url_for('route_sort_questions', order_by='message', order_direction='asc') }}"><i class="fas fa-chevron-up"></i>
+                        <a href="{{ url_for('route_sort_questions', order_by='message', order_direction='desc') }}"><i class="fas fa-chevron-down"></i></a>
                     </th>
                     <th><div class="d-block pb-4">Submission Time</div>
-                        <a href="/sort?order_by=submission_time&order_direction=asc" class=""><i class="fas fa-chevron-up"></i>
-                        <a href="/sort?order_by=submission_time&order_direction=desc" class=""><i class="fas fa-chevron-down"></i></a>
+                        <a href="{{ url_for('route_sort_questions', order_by='submission_time', order_direction='asc') }}"><i class="fas fa-chevron-up"></i>
+                        <a href="{{ url_for('route_sort_questions', order_by='submission_time', order_direction='desc') }}"><i class="fas fa-chevron-down"></i></a>
                     </th>
                     <th><div class="pb-4">View Number</div>
-                        <a href="/sort?order_by=view_number&order_direction=asc" class=""><i class="fas fa-chevron-up"></i>
-                        <a href="/sort?order_by=view_number&order_direction=desc" class=""><i class="fas fa-chevron-down"></i></a>
+                        <a href="{{ url_for('route_sort_questions', order_by='view_number', order_direction='asc') }}"><i class="fas fa-chevron-up"></i>
+                        <a href="{{ url_for('route_sort_questions', order_by='view_number', order_direction='desc') }}"><i class="fas fa-chevron-down"></i></a>
                     </th>
                     <th><div class="pb-4">Vote Number</div>
-                        <a href="/sort?order_by=vote_number&order_direction=asc" class=""><i class="fas fa-chevron-up"></i>
-                        <a href="/sort?order_by=vote_number&order_direction=desc" class=""><i class="fas fa-chevron-down"></i></a>
+                        <a href="{{ url_for('route_sort_questions', order_by='vote_number', order_direction='asc') }}"><i class="fas fa-chevron-up"></i>
+                        <a href="{{ url_for('route_sort_questions', order_by='view_number', order_direction='desc') }}"><i class="fas fa-chevron-down"></i></a>
                     </th>
                     <th><div class="pb-5">Image</div></th>
                     <th></th>

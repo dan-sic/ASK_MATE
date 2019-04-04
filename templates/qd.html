@@ -11,11 +11,11 @@
                     </div>
                     <div class="col-md-2">
                         {% if question['image'] %}
-                            <img src="/static/{{ question['image'] }}" alt="User image" class="img-thumbnail" style="width: 150px">
+                            <img src="{{ url_for('static', filename=question['image']) }}" alt="User image" class="img-thumbnail" style="width: 150px">
                         {% else %}
                             <img src="http://placehold.it/80" alt="Example image" class="img-thumbnail" style="width: 150px">
                         {% endif %}
-                        <form method=POST enctype=multipart/form-data action='/upload?question_id={{ question["id"] }}'>
+                        <form method=POST enctype=multipart/form-data action='{{ url_for('upload', question_id=question['id']) }}'>
                             <label class="btn btn-primary btn-sm">
                                 Browse <input type="file" style="display: none;" name="photo">
                             </label>

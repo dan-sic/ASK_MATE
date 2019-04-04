@@ -1,7 +1,6 @@
 from connection import connection_handler
 import datetime
-import util
-import os
+from data_manager import dm_general
 
 
 @connection_handler
@@ -22,3 +21,17 @@ def add_sql_answer(cursor, form_data, question_id):
                     INSERT INTO answer (submission_time, vote_number, question_id, message) \
                     VALUES ('{time}', 0, '{question_id}', '{form_data['answer']}')
                     """)
+
+
+@connection_handler
+def delete_answer(cursor, id):
+    # delete answer image if exists
+    dm_general.remove_image('answer', id)
+
+    # delete answer and all related comments
+    cursor.execute(
+                f"""
+            DELETE FROM comment WHERE answer_id={id};
+            DELETE FROM answer WHERE id={id};
+                """
+            )
