@@ -1,5 +1,5 @@
 from server_python.config import app
-from data_manager import dm_general, dm_questions, dm_answers
+from data_manager import dm_general, dm_questions, dm_answers, dm_comments
 from flask import request, redirect, render_template
 
 
@@ -47,8 +47,9 @@ def route_question_detail(id):
             dm_questions.update_question_view_increase_count(id)
         question = dm_questions.get_question_sql_by_id(id)[0]
         answers = dm_answers.get_all_sql_answers_by_question_id(id)
-        print(answers)
-        return render_template('qd.html', question=question, id=id, answers=answers, count=len(answers))
+        comments = dm_comments.show_question_comments_by_id(id)
+        print(comments)
+        return render_template('qd.html', question=question, id=id, answers=answers, count=len(answers), comments=comments)
     except ValueError:
         return redirect('/')
 

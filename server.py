@@ -3,6 +3,7 @@ from server_python import config
 from server_python import sv_questions
 from server_python import sv_general
 from server_python import sv_answers
+from server_python import sv_comments
 
 
 if __name__ == "__main__":

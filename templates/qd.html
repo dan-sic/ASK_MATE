@@ -37,8 +37,18 @@
             <div class="card">
                 <div class="card-body">
                     <h5 class="card-title">Comments</h5>
-                    {% for comment in comments %}<p class="card-text">{{ comment }}</p>{% endfor %}
-                    <a href="#" class="btn">Add comment</a>
+                        {% for comment in comments %}
+                        <div class="row">
+                            <div class="col-md-4">
+                                <p>user</p>
+                            </div>
+                            <div class="col-md-8">
+                                <p class="card-text">tu jest koment{{ comment }}</p>
+                            </div>
+                            <hr>
+                        </div>
+                        {% endfor %}
+                    <a href="/question/{{ id }}/new-comment" class="btn">Add comment</a>
                 </div>
             </div>
             <div class="mt-4">
