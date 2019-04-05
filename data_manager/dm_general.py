@@ -2,6 +2,11 @@ import connection
 import util
 import os
 
+
+def delete_element_sql(element_type, element_id):
+    pass
+
+
 # todo > delete element in SQL
 def delete_element(element_type, element_id):
 
@@ -36,6 +41,7 @@ def delete_element(element_type, element_id):
         # delete answer
         updated_answers = [answer for answer in answers if answer['question_id'] != element_id]
         connection.write_file(updated_answers, 'answers.csv')
+
 
 # todo > saving images and updating
 def update_image(file_type, filename, id):

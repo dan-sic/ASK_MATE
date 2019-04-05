@@ -56,13 +56,13 @@ def route_question_detail(id):
 @app.route('/question_detail/<id>/edit', methods=['POST', 'GET'])
 def route_question_edit(id):
     action = '/question_detail/' + id + '/edit'
-    question = dm_questions.get_question_sql_by_id(id)
+    question = dm_questions.get_question_sql_by_id(id)[0]
     print(question)
+    now = '1'
     if request.method == 'POST':
         dm_questions.update_question_sql(id, request.form)
         return redirect('/question_detail/' + id)
-    # todo  > check why question data does not appear in form during edit
-    return render_template('form.html', question=question, action=action)
+    return render_template('form.html', question=question, action=action, now=now)
 
 
 @app.route('/question/<question_id>/vote-down')
