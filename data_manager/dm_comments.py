@@ -13,12 +13,13 @@ def add_comment_to_question(cursor, form_data, question_id):
 
 
 @connection_handler
-def add_comment_to_answer(cursor, form_data, answer_id):
+def add_comment_to_answer(cursor, form_data, answer_id, question_data):
+    question_id = question_data['question_id']
     time = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
     cursor.execute(f"""
                     INSERT INTO comment
-                    (edited_count, message, answer_id, submission_time)
-                    VALUES (0, '{form_data['message']}', '{answer_id}', '{time}')
+                    (edited_count, message, answer_id, submission_time, question_id)
+                    VALUES (0, '{form_data['message']}', '{answer_id}', '{time}', '{question_id}')
 """)
 
 
@@ -64,3 +65,4 @@ def update_comment_by_id(cursor, form_data, id):
 """)
     question_id = cursor.fetchall()
     return question_id
+

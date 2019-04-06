@@ -22,3 +22,13 @@ def add_sql_answer(cursor, form_data, question_id):
                     INSERT INTO answer (submission_time, vote_number, question_id, message) \
                     VALUES ('{time}', 0, '{question_id}', '{form_data['answer']}')
                     """)
+
+
+@connection_handler
+def get_question_id_by_answer_id(cursor, answer_id):
+    cursor.execute(f"""
+                    SELECT * FROM answer
+                    WHERE id = '{answer_id}';
+""")
+    result = cursor.fetchall()
+    return result
