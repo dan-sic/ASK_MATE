@@ -1,6 +1,7 @@
 from connection import connection_handler
 import datetime
-from data_manager import dm_general
+import util
+import os
 
 
 @connection_handler
@@ -35,3 +36,13 @@ def delete_answer(cursor, id):
             DELETE FROM answer WHERE id={id};
                 """
             )
+
+
+@connection_handler
+def get_question_id_by_answer_id(cursor, answer_id):
+    cursor.execute(f"""
+                    SELECT * FROM answer
+                    WHERE id = '{answer_id}';
+""")
+    result = cursor.fetchall()
+    return result
