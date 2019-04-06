@@ -44,7 +44,13 @@
                                 <p></p>
                             </div>
                             <div class="col-md-11">
-                                <p class="card-text">{{ comment['message'] }} - comment by [] on {{ comment['submission_time']}}</p>
+                                <p class="card-text">{{ comment['message'] }} - comment by [] on {{ comment['submission_time']}}
+                                    {% if comment['edited_count'] != None %}
+                                        {% if comment['edited_count'] > 0  %}
+                                        edited {{ comment['edited_count'] }} times.
+                                        {% endif %}
+                                    {% endif %} <a href="/comments/{{ comment['id'] }}/edit">edit</a>
+                                </p>
                                 <hr>
                             </div>
                         </div>
@@ -117,7 +123,13 @@
                                 {% if comment['answer_id'] == answer['id'] %}
                                 <div class="row">
                                     <div class="col-md-12">
-                                        <p class="card-text">{{ comment['message'] }} - comment by [] on {{ comment['submission_time']}}</p>
+                                        <p class="card-text">{{ comment['message'] }} - comment by [] on {{ comment['submission_time']}}
+                                        {% if comment['edited_count'] != None %}
+                                            {% if comment['edited_count'] > 0  %}
+                                            edited {{ comment['edited_count'] }} times.
+                                            {% endif %}
+                                        {% endif %} <a href="/comments/{{ comment['id'] }}/edit">edit</a>
+                                        </p>
                                         <hr>
                                     </div>
                                 </div>
