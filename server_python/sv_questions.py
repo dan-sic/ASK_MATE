@@ -48,8 +48,8 @@ def route_question_detail(id):
         question = dm_questions.get_question_sql_by_id(id)[0]
         answers = dm_answers.get_all_sql_answers_by_question_id(id)
         comments = dm_comments.show_question_comments_by_id(id)
-        print(comments)
-        return render_template('qd.html', question=question, id=id, answers=answers, count=len(answers), comments=comments)
+        answer_comments = dm_comments.show_answer_comments_by_id(id)
+        return render_template('qd.html', question=question, id=id, answers=answers, count=len(answers), comments=comments, answer_comments=answer_comments)
     except ValueError:
         return redirect('/')
 

@@ -38,15 +38,17 @@
                 <div class="card-body">
                     <h5 class="card-title">Comments</h5>
                         {% for comment in comments %}
+                        {% if comment['answer_id'] == None %}
                         <div class="row">
-                            <div class="col-md-4">
-                                <p>user</p>
+                            <div class="col-md-1">
+                                <p></p>
                             </div>
-                            <div class="col-md-8">
-                                <p class="card-text">tu jest koment{{ comment }}</p>
+                            <div class="col-md-11">
+                                <p class="card-text">{{ comment['message'] }} - comment by [] on {{ comment['submission_time']}}</p>
+                                <hr>
                             </div>
-                            <hr>
                         </div>
+                        {% endif %}
                         {% endfor %}
                     <a href="/question/{{ id }}/new-comment" class="btn">Add comment</a>
                 </div>
@@ -103,9 +105,32 @@
                             </div>
                         </div>
                     </div>
+
+                </div>
+            </div>
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="card">
+                            <div class="card-body">
+                                {% for comment in answer_comments %}
+                                {% if comment['answer_id'] == answer['id'] %}
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <p class="card-text">{{ comment['message'] }} - comment by [] on {{ comment['submission_time']}}</p>
+                                        <hr>
+                                    </div>
+                                </div>
+                                {% endif %}
+                                {% endfor %}
+                                <a href="/answer/{{ answer['id'] }}/new-comment" class="btn">Add comment</a>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
+
         {% endfor %}
     </div>
 </div>
