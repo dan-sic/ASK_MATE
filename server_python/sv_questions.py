@@ -1,5 +1,5 @@
 from server_python.config import app
-from data_manager import dm_general, dm_questions, dm_answers
+from data_manager import dm_general, dm_questions, dm_answers, dm_comments
 from flask import request, redirect, render_template
 
 
@@ -49,8 +49,9 @@ def route_question_detail(id):
             dm_questions.update_question_view_increase_count(id)
         question = dm_questions.get_question_sql_by_id(id)[0]
         answers = dm_answers.get_all_sql_answers_by_question_id(id)
-        print(answers)
-        return render_template('qd.html', question=question, id=id, answers=answers, count=len(answers))
+        comments = dm_comments.show_question_comments_by_id(id)
+        answer_comments = dm_comments.show_answer_comments_by_id(id)
+        return render_template('qd.html', question=question, id=id, answers=answers, count=len(answers), comments=comments, answer_comments=answer_comments)
     except ValueError:
         return redirect('/')
 
@@ -58,13 +59,13 @@ def route_question_detail(id):
 @app.route('/question_detail/<id>/edit', methods=['POST', 'GET'])
 def route_question_edit(id):
     action = '/question_detail/' + id + '/edit'
-    question = dm_questions.get_question_sql_by_id(id)
+    question = dm_questions.get_question_sql_by_id(id)[0]
     print(question)
+    now = '1'
     if request.method == 'POST':
         dm_questions.update_question_sql(id, request.form)
         return redirect('/question_detail/' + id)
-    # todo  > check why question data does not appear in form during edit
-    return render_template('form.html', question=question, action=action)
+    return render_template('form.html', question=question, action=action, now=now)
 
 
 @app.route('/question/<question_id>/vote-down')
