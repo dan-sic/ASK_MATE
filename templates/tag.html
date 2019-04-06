@@ -1,0 +1,30 @@
+{% extends "layout.html" %}
+{% block contents %}
+<div class="container">
+    <div class="row">
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-body">
+                    <form action={{ action }} method="POST">
+                        <div>
+                            <div class="card-title">
+                                <h3>Add tag</h3>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                           <select name="tag">
+                               {% for option in options %}
+                               <option value="{{ option }}">{{ option }}</option>
+                               {% endfor %}
+                           </select>
+                        </div>
+                        <div>
+                            <button type="submit" class="btn btn-primary mb-2">Submit</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -25,8 +25,14 @@
                 </div>
             </div>
             <div></div>
-            <div class="mb-5">
+            <div class="mb-4">
                 <p class="card-text lead">{{ question['message'] }}</p>
+            </div>
+            <div class="mb-1">
+                <button type="button" class="btn-light"><a href="/question/{{ question['id'] }}/new-tag">Add tag</a></button>
+                {% for tag in tags %}
+                <button type="button" class="btn-dark">{{ tag }}</button>
+                {% endfor %}
             </div>
             <small class="text-muted d-block">
                 Posted on: {{ question['submission_time'] }}

@@ -78,3 +78,8 @@ def question_vote_down(question_id):
 def question_vote_up(question_id):
     dm_general.change_vote("question", question_id, 1)
     return redirect('/question_detail/' + question_id)
+
+
+@app.route('/question/<id>/new-tag')
+def route_add_tag(id):
+    return render_template('tag.html')
