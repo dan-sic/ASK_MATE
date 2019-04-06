@@ -1,8 +1,6 @@
 from server_python.config import app
-from data_manager import dm_general, dm_answers
+from data_manager import dm_answers, dm_comments
 from flask import request, redirect, render_template
-import datetime
-from data_manager import dm_comments
 
 
 @app.route('/question/<id>/new-comment', methods=['GET', 'POST'])
@@ -34,6 +32,8 @@ def route_edit_comment(id):
     return render_template('comment.html', comment=comment, action=action)
 
 
-@app.route('/comments/<id>/delete')
+@app.route('/comments/<id>/delete', methods=['GET'])
 def route_delete_comment(id):
-    pass
+    directory = dm_comments.get_comment_by_id(id)[0]
+    dm_comments.delete_comment_by_id(id)
+    return redirect(f"/question_detail/{directory['question_id']}")

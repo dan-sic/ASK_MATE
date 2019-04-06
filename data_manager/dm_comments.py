@@ -66,3 +66,10 @@ def update_comment_by_id(cursor, form_data, id):
     question_id = cursor.fetchall()
     return question_id
 
+
+@connection_handler
+def delete_comment_by_id(cursor, id):
+    cursor.execute(f"""
+                    DELETE FROM comment
+                    WHERE id = '{id}';
+""")
