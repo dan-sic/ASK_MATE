@@ -80,6 +80,9 @@ def question_vote_up(question_id):
     return redirect('/question_detail/' + question_id)
 
 
-@app.route('/question/<id>/new-tag')
+@app.route('/question/<id>/new-tag', methods=['GET', 'POST'])
 def route_add_tag(id):
-    return render_template('tag.html')
+    options = dm_questions.get_all_tags()
+    if request.method == 'POST':
+        pass
+    return render_template('tag.html', options=options)

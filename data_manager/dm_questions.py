@@ -82,3 +82,23 @@ def delete_question(cursor, id):
                 """
             )
 
+
+@connection_handler
+def get_tags_of_question_by_id(cursor, id):
+    cursor.execute(f"""
+                    SELECT DISTINCT *
+                        FROM question_tag INNER JOIN tag
+                            ON question_tag.tag_id = tag.id
+                    WHERE question_tag.question_id = '{id}';
+""")
+    tags = cursor.fetchall()
+    return tags
+
+
+@connection_handler
+def get_all_tags(cursor):
+    cursor.execute("""
+                    SELECT DISTINCT name FROM tag;
+""")
+    tags = cursor.fetchall()
+    return tags
