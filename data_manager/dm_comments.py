@@ -13,8 +13,7 @@ def add_comment_to_question(cursor, form_data, question_id):
 
 
 @connection_handler
-def add_comment_to_answer(cursor, form_data, answer_id, question_data):
-    question_id = question_data['question_id']
+def add_comment_to_answer(cursor, form_data, answer_id, question_id):
     time = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
     cursor.execute(f"""
                     INSERT INTO comment
