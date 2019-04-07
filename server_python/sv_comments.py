@@ -18,7 +18,7 @@ def route_add_comment_to_answer(id):
     if request.method == 'POST':
         question_id = dm_answers.get_question_id_by_answer_id(id)[0]
         dm_comments.add_comment_to_answer(request.form, id, question_id)
-        return redirect(f'/question_detail/{id}')
+        return redirect(f"/question_detail/{question_id['question_id']}")
     return render_template('comment.html', id=id, action=action)
 
 

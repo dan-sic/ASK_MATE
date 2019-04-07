@@ -51,6 +51,8 @@ def route_question_detail(id):
         answers = dm_answers.get_all_sql_answers_by_question_id(id)
         comments = dm_comments.show_question_comments_by_id(id)
         answer_comments = dm_comments.show_answer_comments_by_id(id)
+        print('these are answer comments ', answers)
+        print('neverwimsd')
         tags = dm_tags.get_tags_of_question_by_id(id)
         return render_template('qd.html', question=question, id=id, answers=answers, count=len(answers), comments=comments, answer_comments=answer_comments, tags=tags)
     except ValueError:
@@ -60,8 +62,7 @@ def route_question_detail(id):
 @app.route('/question_detail/<id>/edit', methods=['POST', 'GET'])
 def route_question_edit(id):
     action = '/question_detail/' + id + '/edit'
-    question = dm_questions.get_question_sql_by_id(id)[0]
-    print(question)
+    question = dm_questions.get_question_sql_by_id(id)
     now = '1'
     if request.method == 'POST':
         dm_questions.update_question_sql(id, request.form)

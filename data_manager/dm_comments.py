@@ -37,7 +37,7 @@ def show_question_comments_by_id(cursor, id):
 def show_answer_comments_by_id(cursor, id):
     cursor.execute(f"""
                     SELECT * FROM comment
-                    WHERE answer_id = '{id}';  
+                    WHERE question_id = '{id}';  
 """)
     comments = cursor.fetchall()
     return comments

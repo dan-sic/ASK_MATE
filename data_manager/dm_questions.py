@@ -32,8 +32,13 @@ def get_questions_sorted(cursor, order_by, order_direction):
 
 @connection_handler
 def get_question_sql_by_id(cursor, id):
-    cursor.execute(f'SELECT * FROM question WHERE id={id}')
+    print('this is id ', id)
+    cursor.execute(f"""
+                        SELECT * FROM question 
+                        WHERE id={id}
+""")
     question = cursor.fetchall()
+    print('sdasfdfdfssdd', question)
     return question
 
 
