@@ -1,5 +1,5 @@
 from server_python.config import app
-from data_manager import dm_general, dm_questions, dm_answers, dm_comments
+from data_manager import dm_general, dm_questions, dm_answers, dm_comments, dm_tags
 from flask import request, redirect, render_template
 
 
@@ -51,7 +51,8 @@ def route_question_detail(id):
         answers = dm_answers.get_all_sql_answers_by_question_id(id)
         comments = dm_comments.show_question_comments_by_id(id)
         answer_comments = dm_comments.show_answer_comments_by_id(id)
-        return render_template('qd.html', question=question, id=id, answers=answers, count=len(answers), comments=comments, answer_comments=answer_comments)
+        tags = dm_tags.get_tags_of_question_by_id(id)
+        return render_template('qd.html', question=question, id=id, answers=answers, count=len(answers), comments=comments, answer_comments=answer_comments, tags=tags)
     except ValueError:
         return redirect('/')
 
@@ -64,6 +65,7 @@ def route_question_edit(id):
     now = '1'
     if request.method == 'POST':
         dm_questions.update_question_sql(id, request.form)
+        print(request.form)
         return redirect('/question_detail/' + id)
     return render_template('form.html', question=question, action=action, now=now)
 
@@ -80,9 +82,3 @@ def question_vote_up(question_id):
     return redirect('/question_detail/' + question_id)
 
 
-@app.route('/question/<id>/new-tag', methods=['GET', 'POST'])
-def route_add_tag(id):
-    options = dm_questions.get_all_tags()
-    if request.method == 'POST':
-        pass
-    return render_template('tag.html', options=options)

@@ -29,9 +29,9 @@
                 <p class="card-text lead">{{ question['message'] }}</p>
             </div>
             <div class="mb-1">
-                <button type="button" class="btn-light"><a href="/question/{{ question['id'] }}/new-tag">Add tag</a></button>
+                <a href="/question/{{ question['id'] }}/new-tag"><button type="button" class="btn-light">Add tag</button></a>
                 {% for tag in tags %}
-                <button type="button" class="btn-dark">{{ tag }}</button>
+                <button type="button" class="btn-dark">{{ tag['name'] }}</button><a href="/question_detail/{{ question['id'] }}/tag/{{ tag['id'] }}/delete">x</a>
                 {% endfor %}
             </div>
             <small class="text-muted d-block">
