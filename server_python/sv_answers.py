@@ -10,13 +10,25 @@ def route_delete_answer():
     dm_answers.delete_answer(answer_id)
     return redirect('/question_detail/' + question_id)
 
-
-@app.route('/question/<id>/new-answer', methods=['GET', 'POST'])
-def route_new_answer(id):
+@app.route('/answer/edit', methods=['GET', 'POST'])
+def route_edit_answer():
+    answer_id = request.args.get('answer_id')
+    question_id = request.args.get('question_id')
+    answer = dm_answers.qet_answer_by_id(answer_id)
     if request.method == 'POST':
-        dm_answers.add_sql_answer(request.form, id)
-        return redirect('/question_detail/' + id)
-    return render_template('answer.html', id=id)
+        dm_answers.update_answer(answer_id, request.form)
+        return redirect('/question_detail/' + question_id)
+    return render_template('answer.html', answer=answer, question_id=question_id)
+
+
+
+@app.route('/question/new-answer', methods=['GET', 'POST'])
+def route_new_answer():
+    question_id = request.args.get('question_id')
+    if request.method == 'POST':
+        dm_answers.add_sql_answer(request.form, question_id)
+        return redirect('/question_detail/' + question_id)
+    return render_template('answer.html', question_id=question_id)
 
 
 @app.route('/answer/<answer_id>/vote-down/<question_id>')
