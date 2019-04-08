@@ -28,11 +28,10 @@ def route_sort_questions():
 
 @app.route('/add', methods=['GET', 'POST'])
 def route_add_question():
-    action = '/add'
     if request.method == 'POST':
         dm_questions.add_question_sql(request.form)
         return redirect('/list')
-    return render_template('form.html', action=action)
+    return render_template('form.html')
 
 
 @app.route('/question/<question_id>/delete')
@@ -47,28 +46,24 @@ def route_question_detail(id):
     try:
         if request.method == 'GET':
             dm_questions.update_question_view_increase_count(id)
-        question = dm_questions.get_question_sql_by_id(id)[0]
+        question = dm_questions.get_question_sql_by_id(id)
         answers = dm_answers.get_all_sql_answers_by_question_id(id)
         comments = dm_comments.show_question_comments_by_id(id)
         answer_comments = dm_comments.show_answer_comments_by_id(id)
-        print('these are answer comments ', answers)
-        print('neverwimsd')
         tags = dm_tags.get_tags_of_question_by_id(id)
         return render_template('qd.html', question=question, id=id, answers=answers, count=len(answers), comments=comments, answer_comments=answer_comments, tags=tags)
     except ValueError:
         return redirect('/')
 
 
-@app.route('/question_detail/<id>/edit', methods=['POST', 'GET'])
-def route_question_edit(id):
-    action = '/question_detail/' + id + '/edit'
-    question = dm_questions.get_question_sql_by_id(id)
-    now = '1'
+@app.route('/question_detail/edit', methods=['GET', 'POST'])
+def route_question_edit():
+    question_id = request.args.get('question_id')
+    question = dm_questions.get_question_sql_by_id(question_id)
     if request.method == 'POST':
-        dm_questions.update_question_sql(id, request.form)
-        print(request.form)
-        return redirect('/question_detail/' + id)
-    return render_template('form.html', question=question, action=action, now=now)
+        dm_questions.update_question_sql(question_id, request.form)
+        return redirect('/question_detail/' + question_id)
+    return render_template('form.html', question=question)
 
 
 @app.route('/question/<question_id>/vote-down')

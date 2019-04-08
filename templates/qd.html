@@ -67,7 +67,7 @@
             </div>
             <div class="mt-4">
                 <a href="/question/{{ id }}/new-answer"><button type="button" class="btn btn-outline-primary btn-md" role="button" aria-pressed="true">Answer that question</button></a>
-                <a href="/question_detail/{{ id }}/edit"><button type="button" class="btn btn-outline-primary btn-md" role="button" aria-pressed="true">Edit that question</button></a>
+                <a href="{{ url_for('route_question_edit', question_id=question['id']) }}"><button type="button" class="btn btn-outline-primary btn-md" role="button" aria-pressed="true">Edit that question</button></a>
                 <a href="/question/{{ id }}/delete"><button type="button" class="btn btn-outline-danger btn-md" role="button" aria-pressed="true">Delete that question</button></a>
                 <div class="float-right mr-5 pt-3 align-bottom">
                     <a href="/question/{{ id }}/vote-up" class="mr-2"><i class="fas fa-thumbs-up  text-success"></i></a>

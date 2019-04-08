@@ -5,7 +5,11 @@
             <div class="col-md-6">
                 <div class="card">
                     <div class="card-body">
-                        <form action={{ action }} method="post">
+                        {% if question %}
+                            <form action="{{ url_for('route_question_edit', question_id=question['id']) }}" method="post">
+                        {% else %}
+                            <form action="{{ url_for('route_add_question') }}" method="post">
+                        {% endif %}
                             <div>
                                 {% if question %}
                                 <div class="card-title">
@@ -36,8 +40,7 @@
                                         class="form-control" id="message"
                                         placeholder="Enter the description"
                                         rows="8"
-                                        maxlength="500">{% if question %}{{ question['message'] }}{% endif %}
-                                </textarea>
+                                        maxlength="500">{% if question %}{{ question['message'] }}{% endif %}</textarea>
                             </div>
                             <button type="submit" class="btn btn-primary mb-2">Submit</button>
                         </form>
