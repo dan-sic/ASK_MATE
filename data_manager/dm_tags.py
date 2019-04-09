@@ -35,6 +35,7 @@ def add_tag_to_question(cursor, id, tag_id):
 
 @connection_handler
 def get_tag_id_by_tag_name(cursor, tag_name):
+    print(tag_name)
     cursor.execute(f"""
                     SELECT * FROM tag
                     WHERE name = '{tag_name['tag']}'
@@ -57,13 +58,12 @@ def get_tag_id_by_tag_name(cursor, tag_name):
 @connection_handler
 def get_new_tags(cursor, id):
     cursor.execute(f"""
-                    SELECT DISTINCT tag.name FROM question_tag
-                    INNER JOIN tag
-                    ON question_tag.tag_id = tag.id 
-                    WHERE question_id <> {id} 
-                        AND tag_id NOT IN (SELECT tag_id 
-                                       FROM question_tag 
-                                       WHERE question_id = {id})
+                    SELECT * from question_tag FULL OUTER JOIN tag ON question_tag.tag_id = tag.id
+                    WHERE question_tag.question_id <> 1 OR question_tag.question_id is NULL
+                        AND tag_id NOT IN(
+                            SELECT tag_id
+                            FROM question_tag
+                            WHERE question_id = 1);
 """)
     tags = cursor.fetchall()
     print(tags)

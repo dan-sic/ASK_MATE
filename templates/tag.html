@@ -13,10 +13,13 @@
                         </div>
                         <div class="form-group">
                             {% for option in options %}
-                                        <div class="pb-2">
-                                            <input class="mr-2" type="radio" name="tag" value="{{ option['name'] }}">{{ option['name'] }}<br>
-                                         </div>
+                            <div class="pb-2">
+                                <input class="mr-2" type="radio" name="tag" value="{{ option['name'] }}">{{ option['name'] }}<br>
+                             </div>
                             {% endfor %}
+                            <div class="pb-2">
+                                <input class="mr-2" type="radio" name="tag" value="other">Other<br>
+                            </div>
                         </div>
 
                         <div>
