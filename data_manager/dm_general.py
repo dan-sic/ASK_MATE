@@ -1,6 +1,5 @@
 from connection import connection_handler
 import os
-from psycopg2 import sql
 
 
 @connection_handler
@@ -8,15 +7,6 @@ def update_image_path(cursor, table, filename, id):
     cursor.execute(f"""
                     UPDATE {table} 
                     SET image = 'images/{filename}' WHERE id={id}
-                    """)
-
-
-@connection_handler
-def change_vote(cursor, table, id, change_step):
-    cursor.execute(f"""
-                    UPDATE {table}
-                    SET vote_number = vote_number + {change_step}
-                    WHERE id = {id}
                     """)
 
 

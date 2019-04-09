@@ -89,3 +89,15 @@ def delete_question(cursor, id):
             )
 
 
+@connection_handler
+def change_question_vote(cursor, question_id, value_to_change_vote):
+    cursor.execute(f"""
+                    UPDATE question
+                    SET vote_number = vote_number + {value_to_change_vote}
+                    WHERE id = {question_id}
+                    """)
+    cursor.execute(f"""
+                    SELECT vote_number FROM question WHERE id={question_id}
+                    """)
+    new_vote_number = cursor.fetchone()
+    return new_vote_number

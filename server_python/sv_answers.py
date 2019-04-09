@@ -1,6 +1,6 @@
 from server_python.config import app
 from data_manager import dm_general, dm_answers
-from flask import redirect, request, render_template
+from flask import redirect, request, render_template, jsonify
 
 
 @app.route('/answer/delete')
@@ -41,3 +41,10 @@ def answer_vote_down(answer_id, question_id):
 def answer_vote_up(answer_id, question_id):
     dm_general.change_vote("answer", answer_id, 1)
     return redirect('/question_detail/' + question_id)
+
+
+@app.route('/answer/<answer_id>/vote', methods=['PUT'])
+def answer_change_vote(answer_id):
+    value_to_change_vote = request.get_json()['voteValue']
+    new_vote_value = dm_answers.change_answer_vote(answer_id, value_to_change_vote)
+    return jsonify(new_vote_value)

@@ -1,7 +1,5 @@
 from connection import connection_handler
 import datetime
-import util
-import os
 from data_manager import dm_general
 
 
@@ -58,3 +56,17 @@ def update_answer(cursor, answer_id, form_data):
             UPDATE answer SET message=%(answer)s WHERE id=%(answer_id)s
         """, {"answer": form_data['answer'], "answer_id": answer_id}
     )
+
+
+@connection_handler
+def change_answer_vote(cursor, answer_id, value_to_change_vote):
+    cursor.execute(f"""
+                    UPDATE answer
+                    SET vote_number = vote_number + {value_to_change_vote}
+                    WHERE id = {answer_id}
+                    """)
+    cursor.execute(f"""
+                    SELECT vote_number FROM answer WHERE id={answer_id}
+                    """)
+    new_vote_number = cursor.fetchone()
+    return new_vote_number
