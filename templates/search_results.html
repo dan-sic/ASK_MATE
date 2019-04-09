@@ -12,8 +12,8 @@
         <div class="card list-group-item">
             <div class="container">
                 <div>
-                    <h5 class="card-title">Q: {{ question['title'] }}</h5>
-                    <p class="card-text">{{ question['message'] }}</p>
+                    <h5 class="card-title">Q: {{ markup(highlight_search_term_fn(question['title'])) }}</h5>
+                    <p class="card-text">{{ markup(highlight_search_term_fn(question['message'])) }}</p>
                     <small class="text-muted d-block mt-5">
                         Posted on: {{ question['submission_time'] }}
                     </small>
@@ -30,7 +30,7 @@
                             {% for answer in searched_answers %}
                                 {% if answer['question_id'] == question['id']%}
                                     <li class="list-group-item">
-                                        <p>{{ answer['message'] }}</p>
+                                        <p>{{ markup(highlight_search_term_fn(answer['message'])) }}</p>
                                         <small class="text-muted d-block mt-5">
                                             Posted on: {{ answer['submission_time'] }}
                                         </small>
