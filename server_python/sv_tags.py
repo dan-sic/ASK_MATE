@@ -10,7 +10,7 @@ def route_add_tag(id):
     if request.method == 'POST':
         tag_id = dm_tags.get_tag_id_by_tag_name(request.form)
         dm_tags.add_tag_to_question(id, tag_id[0]['id'])
-        return redirect('/')
+        return redirect(f'question_detail/{id}')
     return render_template('tag.html', options=options, action=action)
 
 
