@@ -32,10 +32,10 @@ def qet_answer_by_id(cursor, answer_id):
 @connection_handler
 def add_sql_answer(cursor, form_data, question_id):
     time = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-    cursor.execute(f"""
-                    INSERT INTO answer (submission_time, vote_number, question_id, message) \
-                    VALUES ('{time}', 0, '{question_id}', '{form_data['answer']}')
-                    """)
+    cursor.execute("""
+                    INSERT INTO answer (submission_time, vote_number, question_id, message)
+                    VALUES (%(time)s, 0, %(question_id)s, %(answer)s)
+                    """, {'time': time, 'question_id': question_id, 'answer': form_data['answer']})
 
 
 @connection_handler

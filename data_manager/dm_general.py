@@ -35,5 +35,21 @@ def remove_image(cursor, table, id):
         os.remove(f"../static/{file_path}")
 
 
-
-
+@connection_handler
+def search_results(cursor, search_term):
+    # cursor.execute("""
+    #             SELECT * FROM question q LEFT JOIN answer a ON q.id=a.question_id WHERE
+    #             (q.title LIKE %(search_term)s OR q.message LIKE %(search_term)s OR a.message LIKE %(search_term)s)
+    #             """, {"search_term": search_term}
+    #             )
+    # result = cursor.fetchall()
+    # return result
+    cursor.execute("""
+            SELECT * FROM question WHERE UPPER(title) LIKE UPPER(%(search_term)s) OR UPPER(message) LIKE UPPER(%(search_term)s)
+                    """, {'search_term': '%'+search_term+'%'})
+    questions = cursor.fetchall()
+    cursor.execute("""
+            SELECT * FROM answer WHERE UPPER(message) LIKE UPPER(%(search_term)s)
+                    """, {'search_term': '%'+search_term+'%'})
+    answers = cursor.fetchall()
+    return questions, answers

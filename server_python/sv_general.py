@@ -18,3 +18,15 @@ def upload():
 
         dm_general.update_image_path(table, filename, id)
         return redirect('/question_detail/' + question_id)
+
+
+@app.route('/search')
+def route_search():
+    search_term = request.args.get('search_term')
+    searched_questions, searched_answers = dm_general.search_results(search_term)
+    questions_count = len(searched_questions)
+    return render_template('search_results.html',
+                           searched_questions=searched_questions,
+                           searched_answers=searched_answers,
+                           questions_count=questions_count)
+

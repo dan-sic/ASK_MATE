@@ -1,0 +1,52 @@
+{% extends "layout.html" %}
+{% block contents %}
+
+    <div class="container">
+    <div class="list-group">
+        <div class="list-group-item bg-info text-white">
+            <i class="fas fa-comment mr-2 text-white"></i>Search results
+            <span class="badge badge-light ml-auto">{{ questions_count }}</span>
+        </div>
+        {% for question in searched_questions %}
+
+        <div class="card list-group-item">
+            <div class="container">
+                <div>
+                    <h5 class="card-title">Q: {{ question['title'] }}</h5>
+                    <p class="card-text">{{ question['message'] }}</p>
+                    <small class="text-muted d-block mt-5">
+                        Posted on: {{ question['submission_time'] }}
+                    </small>
+                    <div class="mt-2">
+                        Votes: {{ question['vote_number'] }}
+                    </div>
+                </div>
+            </div>
+            <div class="container">
+                <div class="card">
+                    <h5 class="card-title">Answers:</h5>
+                    <div class="card-body">
+                        <ul class="list-group list-group-flush">
+                            {% for answer in searched_answers %}
+                                {% if answer['question_id'] == question['id']%}
+                                    <li class="list-group-item">
+                                        <p>{{ answer['message'] }}</p>
+                                        <small class="text-muted d-block mt-5">
+                                            Posted on: {{ answer['submission_time'] }}
+                                        </small>
+                                        <div class="mt-2">
+                                            Votes: {{ answer['vote_number'] }}
+                                        </div>
+                                    </li>
+                                {% endif %}
+                            {% endfor %}
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+
+{% endblock %}
