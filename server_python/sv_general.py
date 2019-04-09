@@ -28,11 +28,10 @@ def route_search():
     searched_questions, searched_answers = dm_general.search_results(search_term)
     questions_count = len(searched_questions)
     highlight_search_term_fn = lambda sequence: highlight_search_term(search_term, sequence)
-    markup = Markup
     return render_template('search_results.html',
                            searched_questions=searched_questions,
                            searched_answers=searched_answers,
                            questions_count=questions_count,
                            highlight_search_term_fn=highlight_search_term_fn,
-                           markup=markup)
+                           markup=Markup)
 

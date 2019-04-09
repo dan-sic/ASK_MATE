@@ -12,8 +12,8 @@
         <div class="card list-group-item">
             <div class="container">
                 <div>
-                    <h5 class="card-title">Q: {{ markup(highlight_search_term_fn(question['title'])) }}</h5>
-                    <p class="card-text">{{ markup(highlight_search_term_fn(question['message'])) }}</p>
+                    <h5 class="card-title"><a href="question_detail/{{ question['id'] }}">Q: {{ markup(highlight_search_term_fn(question['title'])) }}</a></h5>
+                    <p class="lead">{{ markup(highlight_search_term_fn(question['message'])) }}</p>
                     <small class="text-muted d-block mt-5">
                         Posted on: {{ question['submission_time'] }}
                     </small>
@@ -22,20 +22,23 @@
                     </div>
                 </div>
             </div>
-            <div class="container">
+            <div class="container mt-3">
                 <div class="card">
-                    <h5 class="card-title">Answers:</h5>
                     <div class="card-body">
-                        <ul class="list-group list-group-flush">
+                    <p class="card-title"><b>Answers:</b></p>
+                        <hr>
+                        <ul class="answer_list">
                             {% for answer in searched_answers %}
                                 {% if answer['question_id'] == question['id']%}
-                                    <li class="list-group-item">
+                                    <li class="answer_list_item">
                                         <p>{{ markup(highlight_search_term_fn(answer['message'])) }}</p>
-                                        <small class="text-muted d-block mt-5">
-                                            Posted on: {{ answer['submission_time'] }}
-                                        </small>
-                                        <div class="mt-2">
-                                            Votes: {{ answer['vote_number'] }}
+                                        <div class="answer_list_item_meta">
+                                            <small class="text-muted">
+                                                Posted on: {{ answer['submission_time'] }}
+                                            </small>
+                                            <small class="text-muted">
+                                                Votes: {{ answer['vote_number'] }}
+                                            </small>
                                         </div>
                                     </li>
                                 {% endif %}

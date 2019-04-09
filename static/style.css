@@ -1,0 +1,13 @@
+.answer_list {
+    list-style: none;
+}
+
+.answer_list-item {
+    text-decoration: none;
+    padding: 20px 0;
+    border-bottom: 1px solid dimgrey;
+}
+
+.answer_list-item-meta {
+
+}
