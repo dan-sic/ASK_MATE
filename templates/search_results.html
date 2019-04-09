@@ -30,7 +30,7 @@
                         <ul class="answer_list">
                             {% for answer in searched_answers %}
                                 {% if answer['question_id'] == question['id']%}
-                                    <li class="answer_list_item">
+                                    <li class="py-3 border-bottom mb-3">
                                         <p>{{ markup(highlight_search_term_fn(answer['message'])) }}</p>
                                         <div class="answer_list_item_meta">
                                             <small class="text-muted">
