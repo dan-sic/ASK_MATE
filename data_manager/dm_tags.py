@@ -11,7 +11,6 @@ def get_tags_of_question_by_id(cursor, id):
                     WHERE question_tag.question_id = {int_id};
 """)
     tags = cursor.fetchall()
-    print(tags, 'these is what we rteturner')
     return tags
 
 
@@ -35,38 +34,32 @@ def add_tag_to_question(cursor, id, tag_id):
 
 @connection_handler
 def get_tag_id_by_tag_name(cursor, tag_name):
-    cursor.execute(f"""
-                    SELECT * FROM tag
-                    WHERE name = '{tag_name['tag']}'
-""")
-    tag_id = cursor.fetchall()
-    # if there is no tag in table, add new one
-    if tag_id:
-        return tag_id
+    if tag_name['tag'] != 'other':
+        cursor.execute(f"""
+                        SELECT * FROM tag
+                        WHERE name = '{tag_name['tag']}'
+    """)
     else:
         cursor.execute(f"""
-                    INSERT INTO tag (name)
-                    VALUES ('{tag_name['tag']}');
-                    SELECT * FROM tag
-                    WHERE name = '{tag_name['tag']}'                   
-""")
-        tag_id = cursor.fetchall()
-        return tag_id
+                            INSERT INTO tag (name)
+                            VALUES ('{tag_name['other']}');
+                            SELECT * FROM tag
+                            WHERE name = '{tag_name['other']}'                   
+        """)
+    result = cursor.fetchall()
+    return result
 
 
 @connection_handler
 def get_new_tags(cursor, id):
     cursor.execute(f"""
-                    SELECT DISTINCT tag.name FROM question_tag
-                    INNER JOIN tag
-                    ON question_tag.tag_id = tag.id 
-                    WHERE question_id <> {id} 
-                        AND tag_id NOT IN (SELECT tag_id 
-                                       FROM question_tag 
-                                       WHERE question_id = {id})
+                    SELECT tag.id, tag.name FROM tag
+                    WHERE tag.id NOT IN (
+                        SELECT tag_id FROM question_tag
+                        WHERE question_id = {id}
+                        );
 """)
     tags = cursor.fetchall()
-    print(tags)
     return tags
 
 
