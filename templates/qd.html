@@ -9,17 +9,24 @@
                     <div class="col-md-10">
                         <h2 class="display-3 pt-4"><em>{{ question['title'] }}</em></h2>
                     </div>
-                    <div class="col-md-2">
-                        {% if question['image'] %}
-                            <img src="{{ url_for('static', filename=question['image']) }}" alt="User image" class="img-thumbnail" style="width: 150px">
-                        {% else %}
-                            <img src="http://placehold.it/80" alt="Example image" class="img-thumbnail" style="width: 150px">
-                        {% endif %}
-                        <form method=POST enctype=multipart/form-data action='{{ url_for('upload', question_id=question['id']) }}'>
-                            <label class="btn btn-primary btn-sm">
-                                Browse <input type="file" style="display: none;" name="photo">
-                            </label>
-                            <button class="btn btn-primary btn-sm" type="submit">Upload</button>
+                    <div class="col-md-2 user-image">
+                        <div class="user-image__wrapper-question">
+                            {% if question['image'] %}
+                                <img src="{{ url_for('static', filename=question['image']) }}" alt="User image" class="img-thumbnail user-image__image">
+                            {% else %}
+                                <img src="http://placehold.it/80" alt="Example image" class="img-thumbnail user-image__image">
+                            {% endif %}
+                        </div>
+                        <form class="md-form" method=POST enctype=multipart/form-data action='{{ url_for('upload', question_id=question['id']) }}'>
+                          <div class="file-field file-input">
+                              <div class="file-path-wrapper file-input__wrapper">
+                                  <input class="text-small" type="text" placeholder="Add file">
+                                    <input type="file" name="photo">
+                                </div>
+                            <button class="btn-floating btn-sm blue-gradient mt-0 file-input__submit" type="submit">
+                              <i class="fas fa-cloud-upload-alt" aria-hidden="true"></i>
+                            </button>
+                          </div>
                         </form>
                     </div>
                 </div>
@@ -95,16 +102,23 @@
             <div class="container">
                 <div class="row">
                     <div class="col-md-1" style="margin:0;padding:0;">
-                        {% if answer['image'] %}
-                            <img src="/static/{{ answer['image'] }}" alt="User image" class="img-thumbnail" style="width: 100px">
-                        {% else %}
-                            <img src="http://placehold.it/80" alt="Example image" class="img-thumbnail" style="width: 100px">
-                        {% endif %}
-                        <form method=POST enctype=multipart/form-data action='/upload?question_id={{ question["id"] }}&answer_id={{ answer["id"] }}'>
-                            <label class="btn btn-primary btn-sm">
-                                Browse <input type="file" style="display: none;" name="photo">
-                            </label>
-                            <button class="btn btn-primary btn-sm" type="submit">Upload</button>
+                        <div class="user-image__wrapper-answer">
+                            {% if answer['image'] %}
+                                <img src="/static/{{ answer['image'] }}" alt="User image" class="img-thumbnail user-image__image" >
+                            {% else %}
+                                <img src="http://placehold.it/80" alt="Example image" class="img-thumbnail user-image__image">
+                            {% endif %}
+                        </div>
+                        <form class="md-form" method=POST enctype=multipart/form-data action='/upload?question_id={{ question["id"] }}&answer_id={{ answer["id"] }}'>
+                          <div class="file-field">
+                              <div class="file-path-wrapper">
+                                  <input class="text-small" type="text" placeholder="Add file">
+                                    <input type="file" name="photo">
+                                </div>
+                            <button class="btn-floating btn-sm blue-gradient mt-0 file-input__submit" type="submit">
+                              <i class="fas fa-cloud-upload-alt" aria-hidden="true"></i>
+                            </button>
+                          </div>
                         </form>
                     </div>
                     <div class="col-md-11">
