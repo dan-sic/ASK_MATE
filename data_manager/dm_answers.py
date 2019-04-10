@@ -19,12 +19,8 @@ def qet_answer_by_id(cursor, answer_id):
                     SELECT * FROM answer WHERE id=%(answer_id)s
                     """,
                     {"answer_id": answer_id})
-    answer_in_list = cursor.fetchall()
-    if answer_in_list:
-        return answer_in_list[0]
-    else:
-        return None
-
+    answer = cursor.fetchone()
+    return answer
 
 
 @connection_handler
@@ -37,17 +33,18 @@ def add_sql_answer(cursor, form_data, question_id):
 
 
 @connection_handler
-def delete_answer(cursor, id):
+def delete_answer(cursor, answer_id):
     # delete answer image if exists
-    dm_general.remove_image('answer', id)
+    dm_general.remove_image('answer', answer_id)
 
     # delete answer and all related comments
     cursor.execute(
-                f"""
-            DELETE FROM comment WHERE answer_id={id};
-            DELETE FROM answer WHERE id={id};
                 """
+            DELETE FROM comment WHERE answer_id=%(answer_id)s;
+            DELETE FROM answer WHERE id=%(answer_id)s;
+                """, {'answer_id': answer_id}
             )
+
 
 @connection_handler
 def update_answer(cursor, answer_id, form_data):
@@ -60,13 +57,13 @@ def update_answer(cursor, answer_id, form_data):
 
 @connection_handler
 def change_answer_vote(cursor, answer_id, value_to_change_vote):
-    cursor.execute(f"""
+    cursor.execute("""
                     UPDATE answer
-                    SET vote_number = vote_number + {value_to_change_vote}
-                    WHERE id = {answer_id}
-                    """)
-    cursor.execute(f"""
-                    SELECT vote_number FROM answer WHERE id={answer_id}
-                    """)
+                    SET vote_number = vote_number + %(value_to_change_vote)s
+                    WHERE id = %(answer_id)s
+                    """, {'value_to_change_vote': value_to_change_vote, 'answer_id': answer_id})
+    cursor.execute("""
+                    SELECT vote_number FROM answer WHERE id=%(answer_id)s
+                    """, {'answer_id': answer_id})
     new_vote_number = cursor.fetchone()
     return new_vote_number
