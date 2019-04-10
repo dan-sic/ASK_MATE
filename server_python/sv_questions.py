@@ -48,10 +48,15 @@ def route_question_detail(id):
             dm_questions.update_question_view_increase_count(id)
         question = dm_questions.get_question_sql_by_id(id)
         answers = dm_answers.get_all_sql_answers_by_question_id(id)
-        comments = dm_comments.show_question_comments_by_id(id)
+        question_comments = dm_comments.show_question_comments_by_id(id)
         answer_comments = dm_comments.show_answer_comments_by_id(id)
         tags = dm_tags.get_tags_of_question_by_id(id)
-        return render_template('qd.html', question=question, id=id, answers=answers, count=len(answers), comments=comments, answer_comments=answer_comments, tags=tags)
+        return render_template('qd.html', question=question,
+                               id=id, answers=answers,
+                               count=len(answers),
+                               question_comments=question_comments,
+                               answer_comments=answer_comments,
+                               tags=tags)
     except ValueError:
         return redirect('/')
 
@@ -64,18 +69,6 @@ def route_question_edit():
         dm_questions.update_question_sql(question_id, request.form)
         return redirect('/question_detail/' + question_id)
     return render_template('form.html', question=question)
-
-
-# @app.route('/question/<question_id>/vote-down')
-# def question_vote_down(question_id):
-#     dm_general.change_vote("question", question_id, -1)
-#     return redirect('/question_detail/' + question_id)
-#
-#
-# @app.route('/question/<question_id>/vote-up')
-# def question_vote_up(question_id):
-#     dm_general.change_vote("question", question_id, 1)
-#     return redirect('/question_detail/' + question_id)
 
 
 @app.route('/question/<question_id>/vote', methods=['PUT'])

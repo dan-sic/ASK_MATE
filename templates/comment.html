@@ -5,10 +5,18 @@
         <div class="col-md-6">
             <div class="card">
                 <div class="card-body">
-                    <form action="{{ url_for('route_add_comment_to_answer', question_id=question_id, answer_id=answer_id) }}" method="POST">
+                    {% if is_add_comment_to_question %}
+                        <form action="{{ url_for('route_add_comment_to_question', question_id=question_id) }}" method="POST">
+                    {% elif is_add_comment_to_answer %}
+                        <form action="{{ url_for('route_add_comment_to_answer', answer_id=answer_id, question_id=question_id) }}" method="POST">
+                    {% else %}
+                        <form action="{{ url_for('route_edit_comment', comment_id=comment['id']) }}" method="POST">
+                    {% endif %}
                         <div>
                             <div class="card-title">
-                                <h3>{% if comment %}Edit comment {% else %}Add new comment{% endif %}</h3>
+                                <h3>
+                                    {% if comment %}Edit comment {% else %}Add new comment{% endif %}
+                                </h3>
                             </div>
                         </div>
                         <div class="form-group">
