@@ -2,12 +2,12 @@
 {% block contents %}
 <div class="container mb-4">
     <div class="card">
-        <h1 class="card-header display-5 text-uppercase">Question detail</h1>
+        <h1 class="card-header display-5">{{ question['title'] }}</h1>
         <div class="card-body">
-            <div class="container">
+            <div class="container mb-4">
                 <div class="row">
                     <div class="col-md-10">
-                        <h2 class="display-3 pt-4"><em>{{ question['title'] }}</em></h2>
+                        <p class="lead">{{ question['message'] }}</p>
                     </div>
                     <div class="col-md-2 user-image">
                         <div class="user-image__wrapper-question">
@@ -20,7 +20,7 @@
                         <form class="md-form" method=POST enctype=multipart/form-data action='{{ url_for('upload', question_id=question['id']) }}'>
                           <div class="file-field file-input">
                               <div class="file-path-wrapper file-input__wrapper">
-                                  <input class="text-small" type="text" placeholder="Add file">
+                                  <input class="text-small" type="text" placeholder="Add image">
                                     <input type="file" name="photo">
                                 </div>
                             <button class="btn-floating btn-sm blue-gradient mt-0 file-input__submit" type="submit">
@@ -32,9 +32,9 @@
                 </div>
             </div>
             <div></div>
-            <div class="mb-4">
-                <p class="card-text lead">{{ question['message'] }}</p>
-            </div>
+{#            <div class="mb-4">#}
+{#                <p class="card-text lead">{{ question['message'] }}</p>#}
+{#            </div>#}
             <small class="text-muted d-block">
                 Posted on: {{ question['submission_time'] }}
             </small>
@@ -115,7 +115,7 @@
                         <form class="md-form" method=POST enctype=multipart/form-data action='/upload?question_id={{ question["id"] }}&answer_id={{ answer["id"] }}'>
                           <div class="file-field">
                               <div class="file-path-wrapper">
-                                  <input class="text-small" type="text" placeholder="Add file">
+                                  <input class="text-small" type="text" placeholder="Add image">
                                     <input type="file" name="photo">
                                 </div>
                             <button class="btn-floating btn-sm blue-gradient mt-0 file-input__submit" type="submit">
