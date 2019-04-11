@@ -24,7 +24,9 @@ def route_sort_questions():
     #     return 'Error: wrong parameter'
     order_direction = request.args.get('order_direction', default='asc', type=str)
     questions = dm_questions.get_questions_sorted(feature_to_order_by, order_direction)
-    return render_template('list.html', questions=questions)
+    return render_template('list.html',
+                           questions=questions,
+                           truncate_fn=truncate_question)
 
 
 @app.route('/add', methods=['GET', 'POST'])
