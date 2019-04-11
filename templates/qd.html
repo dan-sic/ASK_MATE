@@ -35,12 +35,6 @@
             <div class="mb-4">
                 <p class="card-text lead">{{ question['message'] }}</p>
             </div>
-            <div class="mb-1">
-                <a href="/question/{{ question['id'] }}/new-tag"><button type="button" class="btn-light">Add tag</button></a>
-                {% for tag in tags %}
-                <button type="button" class="btn-dark">{{ tag['name'] }}</button><a href="/question_detail/{{ question['id'] }}/tag/{{ tag['id'] }}/delete">x</a>
-                {% endfor %}
-            </div>
             <small class="text-muted d-block">
                 Posted on: {{ question['submission_time'] }}
             </small>
@@ -48,11 +42,20 @@
                 Viewed: {{ question['view_number'] }} times
             </small>
             <div class="mt-4">
-                <a href="{{ url_for('route_new_answer', question_id=question['id']) }}"><button type="button" class="btn btn-outline-primary btn-md" role="button" aria-pressed="true">Answer that question</button></a>
-                <a href="{{ url_for('route_question_edit', question_id=question['id']) }}"><button type="button" class="btn btn-outline-primary btn-md" role="button" aria-pressed="true">Edit that question</button></a>
-                <a href="/question/{{ id }}/delete"><button type="button" class="btn btn-outline-danger btn-md" role="button" aria-pressed="true">Delete that question</button></a>
+                {% for tag in tags %}
+                    <span class="badge badge-pill badge-primary">
+                        {{ tag['name'] }}
+                        <a href="/question_detail/{{ question['id'] }}/tag/{{ tag['id'] }}/delete"><i class="fas fa-times text-white"></i></a>
+                    </span>
+                {% endfor %}
+            </div>
+            <div class="mt-4">
+                <a href="{{ url_for('route_new_answer', question_id=question['id']) }}" class="btn btn-outline-primary btn-sm">Answer question</a>
+                <a href="{{ url_for('route_question_edit', question_id=question['id']) }}" class="btn btn-outline-primary btn-sm">Edit question</a>
+                <a href="{{ url_for('route_add_tag', question_id=question['id']) }}" class="btn btn-outline-primary btn-sm">Add tag</a>
+                <a href="/question/{{ id }}/delete" class="btn btn-outline-danger btn-sm">Delete question</a>
                 <div class="float-right mr-5 pt-3 align-bottom">
-                    <i class="fas fa-thumbs-up mr-2 text-success" onclick="questionVoteUp({{ question['id'] }})"></i>
+                    <i class="fas fa-thumbs-up mr-2 text-primary" onclick="questionVoteUp({{ question['id'] }})"></i>
                     <i class="fas fa-thumbs-down mr-2 text-danger" onclick="questionVoteDown({{ question['id'] }})"></i>
                     Votes: <span id="question-vote-{{ question['id'] }}">{{ question['vote_number'] }}</span>
                 </div>
@@ -131,7 +134,7 @@
                                 Posted on: {{ answer['submission_time'] }}
                             </small>
                             <div class="mt-2">
-                                <i class="fas fa-thumbs-up mr-2 text-success" onclick="answerVoteUp({{ answer['id'] }})"></i>
+                                <i class="fas fa-thumbs-up mr-2 text-primary" onclick="answerVoteUp({{ answer['id'] }})"></i>
                                 <i class="fas fa-thumbs-down mr-2 text-danger" onclick="answerVoteDown({{ answer['id'] }})"></i>
                                 Votes: <span id="answer-vote-{{ answer['id'] }}">{{ answer['vote_number'] }}</span>
                             </div>
