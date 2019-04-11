@@ -1,4 +1,14 @@
 import re
+from server_python.config import base_url
+from flask import request
+
+
+def check_referer_url(question_id):
+    referer_url = request.headers.get("Referer")
+    if referer_url != f"{base_url}/question_detail/{question_id}":
+        return True
+    else:
+        return False
 
 
 def replace_string(matchobj):

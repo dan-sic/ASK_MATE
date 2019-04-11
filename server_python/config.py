@@ -3,6 +3,7 @@ from flask_uploads import UploadSet, configure_uploads, IMAGES
 
 app = Flask(__name__, template_folder='../templates', static_folder='../static')
 photos = UploadSet('photos', IMAGES)
+base_url = 'http://127.0.0.1:5004'
 
 app.config['UPLOADED_PHOTOS_DEST'] = 'static/images'
 # prevent catching files in browser:

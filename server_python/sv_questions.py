@@ -1,6 +1,7 @@
 from server_python.config import app
 from data_manager import dm_questions, dm_answers, dm_comments, dm_tags
 from flask import request, redirect, render_template, jsonify
+from util import check_referer_url
 
 
 @app.route('/')
@@ -40,25 +41,22 @@ def route_delete_question(question_id):
     return redirect('/list')
 
 
-@app.route('/question_detail/<id>', methods=['GET', 'POST'])
+@app.route('/question_detail/<id>')
 def route_question_detail(id):
-    # check if this try / except is necessary
-    try:
-        if request.method == 'GET':
-            dm_questions.update_question_view_increase_count(id)
-        question = dm_questions.get_question_sql_by_id(id)
-        answers = dm_answers.get_all_sql_answers_by_question_id(id)
-        question_comments = dm_comments.show_question_comments_by_id(id)
-        answer_comments = dm_comments.show_answer_comments_by_id(id)
-        tags = dm_tags.get_tags_of_question_by_id(id)
-        return render_template('qd.html', question=question,
-                               id=id, answers=answers,
-                               count=len(answers),
-                               question_comments=question_comments,
-                               answer_comments=answer_comments,
-                               tags=tags)
-    except ValueError:
-        return redirect('/')
+    is_different_referer = check_referer_url(id)
+    if is_different_referer:
+        dm_questions.update_question_view_increase_count(id)
+    question = dm_questions.get_question_sql_by_id(id)
+    answers = dm_answers.get_all_sql_answers_by_question_id(id)
+    question_comments = dm_comments.show_question_comments_by_id(id)
+    answer_comments = dm_comments.show_answer_comments_by_id(id)
+    tags = dm_tags.get_tags_of_question_by_id(id)
+    return render_template('qd.html', question=question,
+                           id=id, answers=answers,
+                           count=len(answers),
+                           question_comments=question_comments,
+                           answer_comments=answer_comments,
+                           tags=tags)
 
 
 @app.route('/question_detail/edit', methods=['GET', 'POST'])
