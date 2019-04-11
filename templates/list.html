@@ -35,7 +35,7 @@
                 <tr>
                     <td>{{ loop.index }} </td>
                     <td><a href="question_detail/{{ question['id'] }}">{{ question['title'] }} </a></td>
-                    <td>{{ question['message'] }} </td>
+                    <td>{{ truncate_fn(question['message'], 'list') }} </td>
                     <td>{{ question['submission_time'] }} </td>
                     <td>{{ question['view_number'] }} </td>
                     <td>{{ question['vote_number'] }} </td>

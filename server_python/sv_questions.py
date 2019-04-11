@@ -1,19 +1,19 @@
 from server_python.config import app
 from data_manager import dm_questions, dm_answers, dm_comments, dm_tags
 from flask import request, redirect, render_template, jsonify
-from util import check_referer_url
+from util import check_referer_url, truncate_question
 
 
 @app.route('/')
 def route_home():
     questions = dm_questions.get_5_questions_sql_sorted_by_submission_time()
-    return render_template('index.html', questions=questions)
+    return render_template('index.html', questions=questions, truncate_fn=truncate_question)
 
 
 @app.route('/list')
 def route_list():
     questions = dm_questions.get_all_questions_sql_sorted_by_submission_time()
-    return render_template('list.html', questions=questions)
+    return render_template('list.html', questions=questions, truncate_fn=truncate_question)
 
 
 @app.route('/sort')

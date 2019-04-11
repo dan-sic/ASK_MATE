@@ -18,3 +18,11 @@ def replace_string(matchobj):
 def highlight_search_term(searched_term, sequence):
     new_sequence = re.sub(searched_term, replace_string, sequence, flags=re.I)
     return new_sequence
+
+
+def truncate_question(question_message, list_type):
+    max_length = 250 if list_type == 'home' else 500
+    if len(question_message) > max_length:
+        return question_message[:max_length] + ' (...)'
+    else:
+        return question_message
