@@ -1,12 +1,7 @@
 {% extends "layout.html" %}
 {% block contents %}
-    <div class="container float-right">
-        <a href={{ url_for('route_add_question') }}><button type="button" class="btn btn-primary btn-lg mb-3" role="button">Ask Question</button></a>
-    </div>
-    <div>
-        <br>
-    </div>
-    <div class="container">
+    <a href={{ url_for('route_add_question') }}><button type="button" class="btn btn-primary btn-lg mb-3" role="button">Ask Question</button></a>
+    <div class="container-fluid">
         <table class="table table-bordered">
             <thead class="thead-light">
                 <tr>
@@ -45,9 +40,9 @@
                     <td>{{ question['view_number'] }} </td>
                     <td>{{ question['vote_number'] }} </td>
                     {% if question['image'] %}
-                        <td><img src="/static/{{ question['image'] }}" alt="Example image" class="img-thumbnail" style="height:70px; width:70px;"></td> 
+                        <td class="user-image__wrapper-list"><img src="/static/{{ question['image'] }}" alt="Example image" class="img-thumbnail user-image__image"></td>
                     {% else %}
-                        <td><img src="http://placehold.it/80" alt="Example image" class="img-thumbnail" style="height:70px; width:70px;"></td>
+                        <td class="user-image__wrapper-list"><img src="http://placehold.it/80" alt="Example image" class="img-thumbnail user-image__image"></td>
                     {% endif %}
                     <td><a href="/question/{{ question['id'] }}/delete"><i class="fas fa-trash text-danger"></i></a></td>
                 </tr>
