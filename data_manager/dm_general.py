@@ -18,7 +18,7 @@ def remove_image(cursor, table_name, resource_id):
         sql.SQL('select image from {} WHERE id=%s').format(sql.Identifier(table_name)), [resource_id]
     )
     file_path = cursor.fetchone()
-    if file_path:
+    if file_path and file_path['image'] != None:
         os.remove(f"./static/{file_path['image']}")
 
 
