@@ -52,8 +52,8 @@
                 <a href="{{ url_for('route_add_tag', question_id=question['id']) }}" class="btn btn-outline-primary btn-sm">Add tag</a>
                 <a href="/question/{{ id }}/delete" class="btn btn-outline-danger btn-sm">Delete question</a>
                 <div class="float-right mr-5 pt-3 align-bottom">
-                    <i class="fas fa-thumbs-up mr-2 text-primary" onclick="questionVoteUp({{ question['id'] }})"></i>
-                    <i class="fas fa-thumbs-down mr-2 text-danger" onclick="questionVoteDown({{ question['id'] }})"></i>
+                    <i class="fas fa-thumbs-up mr-2 text-primary thumb-icon" onclick="questionVoteUp({{ question['id'] }})"></i>
+                    <i class="fas fa-thumbs-down mr-2 text-danger thumb-icon" onclick="questionVoteDown({{ question['id'] }})"></i>
                     Votes: <span id="question-vote-{{ question['id'] }}">{{ question['vote_number'] }}</span>
                 </div>
             </div>
@@ -94,14 +94,14 @@
     <div class="list-group">
         <div class="list-group-item bg-info text-white">
             <i class="fas fa-comment mr-2 text-white"></i>Answers
-            <span class="badge badge-light ml-auto">{{ count }}</span>
+            <span class="badge badge-light float-right">{{ count }}</span>
         </div>
         {% for answer in answers %}
 
         <div class="card list-group-item">
             <div class="container">
                 <div class="row">
-                    <div class="col-md-1" style="margin:0;padding:0;">
+                    <div class="col-md-1" style="padding:0;">
                         <div class="user-image__wrapper-answer">
                             {% if answer['image'] %}
                                 <img src="/static/{{ answer['image'] }}" alt="User image" class="img-thumbnail user-image__image" >
@@ -122,17 +122,17 @@
                         </form>
                     </div>
                     <div class="col-md-11">
-                        <div>
+                        <div class="p-4">
                             <a href="{{ url_for('route_delete_answer', answer_id=answer['id'], question_id=question['id']) }}" class="float-right pt-2"><i class="fas fa-trash text-danger"></i></a>
-                            <a href="{{ url_for('route_edit_answer', answer_id=answer['id'], question_id=question['id']) }}" class="float-right pt-2"><i class="fas fa-edit text-info"></i></a>
+                            <a href="{{ url_for('route_edit_answer', answer_id=answer['id'], question_id=question['id']) }}" class="float-right mr-2 pt-2"><i class="fas fa-edit text-info"></i></a>
                             <h5 class="card-title">Answer # {{ loop.index }}</h5>
                             <p class="card-text">{{ answer['message'] }}</p>
                             <small class="text-muted d-block mt-5">
                                 Posted on: {{ answer['submission_time'] }}
                             </small>
                             <div class="mt-2">
-                                <i class="fas fa-thumbs-up mr-2 text-primary" onclick="answerVoteUp({{ answer['id'] }})"></i>
-                                <i class="fas fa-thumbs-down mr-2 text-danger" onclick="answerVoteDown({{ answer['id'] }})"></i>
+                                <i class="fas fa-thumbs-up mr-2 text-primary thumb-icon" onclick="answerVoteUp({{ answer['id'] }})"></i>
+                                <i class="fas fa-thumbs-down mr-2 text-danger thumb-icon" onclick="answerVoteDown({{ answer['id'] }})"></i>
                                 Votes: <span id="answer-vote-{{ answer['id'] }}">{{ answer['vote_number'] }}</span>
                             </div>
                         </div>
