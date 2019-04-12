@@ -55,11 +55,12 @@ def add_question_sql(cursor, form_data):
 
 @connection_handler
 def update_question_sql(cursor, id, form_data):
-    cursor.execute(f"""
+    cursor.execute("""
                     UPDATE question
-                    SET  title = '{form_data['title']}', message = '{form_data['message']}' 
-                    WHERE id = '{id}'
-                    """)
+                    SET  title = %(title)s, message = %(message)s 
+                    WHERE id = %(id)s
+                    """,
+                   {'title': form_data['title'], 'message': form_data['message'], 'id': id})
 
 
 @connection_handler
