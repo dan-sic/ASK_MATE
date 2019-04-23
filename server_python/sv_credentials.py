@@ -1,3 +1,13 @@
 from server_python.config import app
-from data_manager import dm_general
-from flask import request, redirect, render_template
+from flask import flash, render_template, redirect
+from Forms import forms
+
+
+@app.route('/register', methods=['GET', 'POST'])
+def register():
+    form = forms.RegistrationForm()
+    if form.validate_on_submit():
+        print('works')
+        flash(f'Account created for {form.name.data}!', 'success')
+        return redirect('/')
+    return render_template('register.html', form=form, title='Register')
