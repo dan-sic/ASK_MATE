@@ -1,7 +1,6 @@
 from connection import connection_handler
 import os
 from psycopg2 import sql
-from flask import url_for
 
 
 @connection_handler
