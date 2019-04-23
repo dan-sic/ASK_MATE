@@ -64,6 +64,17 @@ CREATE TABLE tag (
     name text
 );
 
+DROP TABLE IF EXISTS public.users:
+DROP SEQUENCE IF EXITST public.user_id_seq;
+CREATE TABLE users (
+    id serial NOT NULL,
+    username text NOT NULL,
+    email text,
+    full_name text,
+    password text NOT NULL,
+    reputation integer
+)
+
 
 ALTER TABLE ONLY answer
     ADD CONSTRAINT pk_answer_id PRIMARY KEY (id);

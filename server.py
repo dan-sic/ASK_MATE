@@ -10,5 +10,6 @@ from server_python import sv_tags
 if __name__ == "__main__":
     config.app.run(
         debug=True,
-        port=5004
+        port=5004,
+        host='0.0.0.0'
 )
