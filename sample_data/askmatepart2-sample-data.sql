@@ -64,8 +64,7 @@ CREATE TABLE tag (
     name text
 );
 
-DROP TABLE IF EXISTS public.users:
-DROP SEQUENCE IF EXITST public.user_id_seq;
+DROP TABLE IF EXISTS public.users;
 CREATE TABLE users (
     id serial NOT NULL,
     username text NOT NULL,
@@ -73,7 +72,7 @@ CREATE TABLE users (
     full_name text,
     password text NOT NULL,
     reputation integer
-)
+);
 
 
 ALTER TABLE ONLY answer
@@ -136,3 +135,6 @@ SELECT pg_catalog.setval('tag_id_seq', 3, true);
 INSERT INTO question_tag VALUES (0, 1);
 INSERT INTO question_tag VALUES (1, 3);
 INSERT INTO question_tag VALUES (2, 3);
+
+INSERT INTO users VALUES (1, 'test', 'test@test.pl', 'Testowy Tescik', '$2b$12$4wLEAbDLP6Ab0Q4M4CyZOe/xSuYcRDi5yHKe6i1nf0dZBo7HJ5h5W', 0);
+INSERT INTO users VALUES (2, 'seba', 'seba@test.pl', 'Sebowski Seba', '$2b$12$yGHK2Vl/I9htIakbQSETxecYmhYAPjPXWEsC6TUcNysCzum2bZHwu', 1);
