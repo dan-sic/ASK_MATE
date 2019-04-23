@@ -15,6 +15,7 @@ ALTER TABLE IF EXISTS ONLY public.question_tag DROP CONSTRAINT IF EXISTS pk_ques
 ALTER TABLE IF EXISTS ONLY public.question_tag DROP CONSTRAINT IF EXISTS fk_question_id CASCADE;
 ALTER TABLE IF EXISTS ONLY public.tag DROP CONSTRAINT IF EXISTS pk_tag_id CASCADE;
 ALTER TABLE IF EXISTS ONLY public.question_tag DROP CONSTRAINT IF EXISTS fk_tag_id CASCADE;
+ALTER TABLE IF EXISTS ONLY public.users DROP CONSTRAINT IF EXISTS pk_users_id CASCADE;
 
 DROP TABLE IF EXISTS public.question;
 DROP SEQUENCE IF EXISTS public.question_id_seq;
@@ -65,13 +66,14 @@ CREATE TABLE tag (
 );
 
 DROP TABLE IF EXISTS public.users;
+DROP SEQUENCE IF EXISTS public.users_id_seq;
 CREATE TABLE users (
     id serial NOT NULL,
     username text NOT NULL,
-    email text,
-    full_name text,
+    name text NOT NULL,
+    email text NOT NULL,
     password text NOT NULL,
-    reputation integer
+    reputation integer DEFAULT 0
 );
 
 
@@ -89,6 +91,9 @@ ALTER TABLE ONLY question_tag
 
 ALTER TABLE ONLY tag
     ADD CONSTRAINT pk_tag_id PRIMARY KEY (id);
+
+ALTER TABLE ONLY users
+    ADD CONSTRAINT pk_users_id PRIMARY KEY (id);
 
 ALTER TABLE ONLY comment
     ADD CONSTRAINT fk_answer_id FOREIGN KEY (answer_id) REFERENCES answer(id);
@@ -136,5 +141,6 @@ INSERT INTO question_tag VALUES (0, 1);
 INSERT INTO question_tag VALUES (1, 3);
 INSERT INTO question_tag VALUES (2, 3);
 
-INSERT INTO users VALUES (1, 'test', 'test@test.pl', 'Testowy Tescik', '$2b$12$4wLEAbDLP6Ab0Q4M4CyZOe/xSuYcRDi5yHKe6i1nf0dZBo7HJ5h5W', 0);
-INSERT INTO users VALUES (2, 'seba', 'seba@test.pl', 'Sebowski Seba', '$2b$12$yGHK2Vl/I9htIakbQSETxecYmhYAPjPXWEsC6TUcNysCzum2bZHwu', 1);
+INSERT INTO users VALUES (0, 'test', 'Testowy Tescik', 'test@test.pl', '$2b$12$4wLEAbDLP6Ab0Q4M4CyZOe/xSuYcRDi5yHKe6i1nf0dZBo7HJ5h5W', 0);
+INSERT INTO users VALUES (1, 'seba', 'Sebowski Seba', 'seba@test.pl', '$2b$12$yGHK2Vl/I9htIakbQSETxecYmhYAPjPXWEsC6TUcNysCzum2bZHwu', 0);
+SELECT pg_catalog.setval('users_id_seq', 1, true);
