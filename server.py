@@ -4,6 +4,7 @@ from server_python import sv_general
 from server_python import sv_answers
 from server_python import sv_comments
 from server_python import sv_tags
+from server_python import sv_credentials
 
 
 if __name__ == "__main__":
