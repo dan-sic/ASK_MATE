@@ -36,8 +36,9 @@ def get_questions_sorted(cursor, order_by, order_direction):
 @connection_handler
 def get_question_sql_by_id(cursor, id):
     cursor.execute(f"""
-                        SELECT * FROM question 
-                        WHERE id={id}
+                        SELECT question.*, users.username FROM question
+                        LEFT JOIN users ON users_id = users.id
+                        WHERE question.id={id}
 """)
     list_with_question = cursor.fetchall()
     if list_with_question:
