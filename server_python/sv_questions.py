@@ -6,7 +6,6 @@ from util import check_referer_url, truncate_question
 
 @app.route('/')
 def route_home():
-    session['user_id'] = 1
     questions = dm_questions.get_5_questions_sql_sorted_by_submission_time()
     return render_template('index.html', questions=questions, truncate_fn=truncate_question)
 
