@@ -1,6 +1,6 @@
 from server_python.config import app
 from data_manager import dm_questions, dm_answers, dm_comments, dm_tags
-from flask import request, redirect, render_template, jsonify
+from flask import request, redirect, render_template, jsonify, session
 from util import check_referer_url, truncate_question
 
 
@@ -19,7 +19,7 @@ def route_list():
 @app.route('/sort')
 def route_sort_questions():
     feature_to_order_by = request.args.get('order_by', default='title', type=str)
-    # todo > everywhere we receive user input - evein in URL - make checks if parameters exist
+    # todo > everywhere we receive user input - even in URL - make checks if parameters exist
     # if feature_to_order_by not in ['title', 'message']:
     #     return 'Error: wrong parameter'
     order_direction = request.args.get('order_direction', default='asc', type=str)
@@ -31,8 +31,13 @@ def route_sort_questions():
 
 @app.route('/add', methods=['GET', 'POST'])
 def route_add_question():
+    # a
     if request.method == 'POST':
-        dm_questions.add_question_sql(request.form)
+        if 'user_id' in session:
+            user_id = session['user_id']
+        else:
+            user_id = None
+        dm_questions.add_question_sql(request.form, user_id)
         return redirect('/list')
     return render_template('form.html')
 

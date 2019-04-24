@@ -36,6 +36,14 @@
                 Posted on: {{ question['submission_time'] }}
             </small>
             <small class="text-muted d-block">
+                Posted by:
+                {%-  if question['users_id'] -%}
+                    <td><a href="/user/{{ question['users_id'] }}"> {{ question['username'] }} </a></td>
+                {% else %}
+                    <td> {{ question['username'] }} </td>
+                {% endif %}
+            </small>
+            <small class="text-muted d-block">
                 Viewed: {{ question['view_number'] }} times
             </small>
             <div class="mt-4">

@@ -19,6 +19,7 @@
                 <tr>
                     <th><div class="pb">No.</div></th>
                     <th><div class="d-block pb">Title</div></th>
+                    <th><div class="d-block pb">User</div></th>
                     <th><div class="d-block pb">Message</div></th>
                     <th><div class="d-block pb">Submission Time</div></th>
                     <th><div class="pb">View Number</div></th>
@@ -32,6 +33,11 @@
                 <tr>
                     <td>{{ loop.index }} </td>
                     <td><a href="question_detail/{{ question['id'] }}">{{ question['title'] }} </a></td>
+                    {%  if question['users_id'] %}
+                        <td><a href="/user/{{ question['users_id'] }}">{{ question['username'] }} </a></td>
+                    {% else %}
+                        <td>{{ question['username'] }} </td>
+                    {% endif %}
                     <td>{{ truncate_fn(question['message'], 'home') }} </td>
                     <td>{{ question['submission_time'] }} </td>
                     <td>{{ question['view_number'] }} </td>
