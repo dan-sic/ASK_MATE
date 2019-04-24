@@ -1,13 +1,17 @@
 from server_python.config import app
 from data_manager import dm_comments
-from flask import request, redirect, render_template
+from flask import request, redirect, render_template, session
 
 
 @app.route('/question/new-comment', methods=['GET', 'POST'])
 def route_add_comment_to_question():
     question_id = request.args.get('question_id')
     if request.method == 'POST':
-        dm_comments.add_comment_to_question(request.form, question_id)
+        if 'user_id' in session:
+            user_id = session['user_id']
+        else:
+            user_id = None
+        dm_comments.add_comment_to_question(request.form, question_id, user_id)
         return redirect(f'/question_detail/{question_id}')
     return render_template('comment.html',
                            question_id=question_id,
@@ -19,7 +23,11 @@ def route_add_comment_to_answer():
     question_id = request.args.get('question_id')
     answer_id = request.args.get('answer_id')
     if request.method == 'POST':
-        dm_comments.add_comment_to_answer(request.form, answer_id, question_id)
+        if 'user_id' in session:
+            user_id = session['user_id']
+        else:
+            user_id = None
+        dm_comments.add_comment_to_answer(request.form, answer_id, question_id, user_id)
         return redirect(f"/question_detail/{question_id}")
     return render_template('comment.html',
                            question_id=question_id,

@@ -78,6 +78,14 @@
                                         <small class="text-muted mr-2">
                                             Posted on: {{ comment['submission_time'] }}
                                         </small>
+                                        <small class="text-muted d-block">
+                                            Posted by:
+                                            {%-  if comment['users_id'] -%}
+                                                <td><a href="/user/{{ comment['users_id'] }}"> {{ comment['username'] }} </a></td>
+                                            {% else %}
+                                                <td> {{ comment['username'] }} </td>
+                                            {% endif %}
+                                        </small>
                                         {% if comment['edited_count'] > 0  %}
                                             <small class="text-muted">
                                                 Edited {{ comment['edited_count'] }} times
@@ -138,6 +146,7 @@
                             <small class="text-muted d-block mt-5">
                                 Posted on: {{ answer['submission_time'] }}
                             </small>
+
                             <div class="mt-2">
                                 <i class="fas fa-thumbs-up mr-2 text-primary thumb-icon" onclick="answerVoteUp({{ answer['id'] }})"></i>
                                 <i class="fas fa-thumbs-down mr-2 text-danger thumb-icon" onclick="answerVoteDown({{ answer['id'] }})"></i>
@@ -160,6 +169,14 @@
                                         <div>
                                             <small class="text-muted mr-2">
                                                 Posted on: {{ comment['submission_time'] }}
+                                            </small>
+                                            <small class="text-muted d-block">
+                                                Posted by:
+                                                {%-  if comment['users_id'] -%}
+                                                    <td><a href="/user/{{ comment['users_id'] }}"> {{ comment['username'] }} </a></td>
+                                                {% else %}
+                                                    <td> {{ comment['username'] }} </td>
+                                                {% endif %}
                                             </small>
                                             {% if comment['edited_count'] > 0  %}
                                                 <small class="text-muted">

@@ -11,7 +11,7 @@ def route_list_users():
     return render_template('users.html', users=users)
 
 
-@app.route('/sort', methods=['GET', 'POST'])
+@app.route('/sort_users', methods=['GET', 'POST'])
 def route_sort_users():
     feature_to_order_by = request.args.get('order_by', default='username', type=str)
     # todo > everywhere we receive user input - evein in URL - make checks if parameters exist
