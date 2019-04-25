@@ -11,12 +11,12 @@ def get_users(cursor):
 
 
 @connection_handler
-def get_user(cursor, user_id):
+def get_user(cursor, user_id=None, username=None, email=None):
     cursor.execute("""
                     SELECT * FROM users
-                    WHERE id=%(id)s
+                    WHERE id=%(user_id)s OR username=%(username)s OR email=%(email)s
                     """,
-                   {'id': user_id})
+                   {'user_id': user_id, 'username': username, 'email': email})
     user = cursor.fetchone()
     return user
 

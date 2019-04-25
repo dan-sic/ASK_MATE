@@ -76,10 +76,10 @@ DROP TABLE IF EXISTS public.users;
 DROP SEQUENCE IF EXISTS public.users_id_seq;
 CREATE TABLE users (
     id serial NOT NULL,
-    username text NOT NULL,
-    name text NOT NULL,
-    email text NOT NULL,
-    password text NOT NULL,
+    username VARCHAR(30) NOT NULL UNIQUE,
+    name VARCHAR(50) NOT NULL ,
+    email VARCHAR(50) NOT NULL UNIQUE,
+    password VARCHAR(60) NOT NULL,
     reputation integer DEFAULT 0
 );
 
