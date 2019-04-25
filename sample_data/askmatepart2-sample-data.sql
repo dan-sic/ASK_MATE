@@ -154,6 +154,6 @@ INSERT INTO question_tag VALUES (0, 1);
 INSERT INTO question_tag VALUES (1, 3);
 INSERT INTO question_tag VALUES (2, 3);
 
-INSERT INTO users VALUES (0, 'test', 'Testowy Tescik', 'test@test.pl', '$2b$12$4wLEAbDLP6Ab0Q4M4CyZOe/xSuYcRDi5yHKe6i1nf0dZBo7HJ5h5W', 0);
-INSERT INTO users VALUES (1, 'seba', 'Sebowski Seba', 'seba@test.pl', '$2b$12$yGHK2Vl/I9htIakbQSETxecYmhYAPjPXWEsC6TUcNysCzum2bZHwu', 0);
-SELECT pg_catalog.setval('users_id_seq', 1, true);
+INSERT INTO users VALUES (1, 'test', 'Testowy Tescik', 'test@test.pl', '$2b$12$4wLEAbDLP6Ab0Q4M4CyZOe/xSuYcRDi5yHKe6i1nf0dZBo7HJ5h5W', 0);
+INSERT INTO users VALUES (2, 'seba', 'Sebowski Seba', 'seba@test.pl', '$2b$12$yGHK2Vl/I9htIakbQSETxecYmhYAPjPXWEsC6TUcNysCzum2bZHwu', 0);
+SELECT pg_catalog.setval('users_id_seq', 2, true);
