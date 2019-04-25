@@ -1,5 +1,5 @@
 from server_python.config import app
-from data_manager import dm_questions, dm_answers, dm_comments, dm_tags
+from data_manager import dm_questions, dm_answers, dm_comments, dm_tags, dm_users
 from flask import request, redirect, render_template, jsonify, session
 from util import check_referer_url, truncate_question
 
@@ -79,6 +79,13 @@ def route_question_edit():
 def question_change_vote(question_id):
     value_to_change_vote = request.get_json()['voteValue']
     new_vote_value = dm_questions.change_question_vote(question_id, value_to_change_vote)
+    if value_to_change_vote > 0:
+        reputation_value = 5
+    else:
+        reputation_value = -2
+    users_id = dm_questions.qet_users_id_by_question_id(question_id)
+    if users_id:
+        dm_users.update_user_reputation(users_id, reputation_value)
     return jsonify(new_vote_value)
 
 
