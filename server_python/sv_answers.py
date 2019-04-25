@@ -1,6 +1,6 @@
 from server_python.config import app
 from data_manager import dm_general, dm_answers
-from flask import redirect, request, render_template, jsonify
+from flask import redirect, request, render_template, jsonify, session
 
 
 @app.route('/answer/delete')
@@ -9,6 +9,7 @@ def route_delete_answer():
     question_id = request.args.get('question_id')
     dm_answers.delete_answer(answer_id)
     return redirect('/question_detail/' + question_id)
+
 
 @app.route('/answer/edit', methods=['GET', 'POST'])
 def route_edit_answer():
@@ -21,12 +22,15 @@ def route_edit_answer():
     return render_template('answer.html', answer=answer, question_id=question_id)
 
 
-
 @app.route('/question/new-answer', methods=['GET', 'POST'])
 def route_new_answer():
     question_id = request.args.get('question_id')
     if request.method == 'POST':
-        dm_answers.add_sql_answer(request.form, question_id)
+        if 'user_id' in session:
+            user_id = session['user_id']
+        else:
+            user_id = None
+        dm_answers.add_sql_answer(request.form, question_id, user_id)
         return redirect('/question_detail/' + question_id)
     return render_template('answer.html', question_id=question_id)
 

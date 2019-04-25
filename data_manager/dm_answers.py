@@ -6,7 +6,9 @@ from data_manager import dm_general
 @connection_handler
 def get_all_sql_answers_by_question_id(cursor, question_id):
     cursor.execute("""
-                    SELECT * FROM answer WHERE question_id=%(question_id)s
+                    SELECT answer.*, users.username FROM answer
+                    LEFT JOIN users ON answer.users_id = users.id
+                    WHERE question_id=%(question_id)s
                     """,
                     {"question_id": question_id})
     answers = cursor.fetchall()
@@ -24,12 +26,12 @@ def qet_answer_by_id(cursor, answer_id):
 
 
 @connection_handler
-def add_sql_answer(cursor, form_data, question_id):
+def add_sql_answer(cursor, form_data, question_id, user_id):
     time = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
     cursor.execute("""
-                    INSERT INTO answer (submission_time, vote_number, question_id, message)
-                    VALUES (%(time)s, 0, %(question_id)s, %(answer)s)
-                    """, {'time': time, 'question_id': question_id, 'answer': form_data['answer']})
+                    INSERT INTO answer (users_id, submission_time, vote_number, question_id, message)
+                    VALUES (%(users_id)s, %(time)s, 0, %(question_id)s, %(answer)s)
+                    """, {'time': time, 'question_id': question_id, 'answer': form_data['answer'], 'users_id': user_id})
 
 
 @connection_handler

@@ -31,7 +31,6 @@ def route_sort_questions():
 
 @app.route('/add', methods=['GET', 'POST'])
 def route_add_question():
-    # a
     if request.method == 'POST':
         if 'user_id' in session:
             user_id = session['user_id']
