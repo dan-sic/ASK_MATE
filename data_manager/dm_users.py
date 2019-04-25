@@ -23,7 +23,7 @@ def get_users_sorted(cursor, order_by, order_direction):
 
 @connection_handler
 def update_user_reputation(cursor, users_id, value):
-
+    print(users_id, value)
     cursor.execute("""
                     UPDATE users
                     SET  reputation = reputation + %(reputation)s
