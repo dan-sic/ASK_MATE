@@ -21,3 +21,9 @@ def route_add_tag():
 def route_delete_tag(question_id, tag_id):
     dm_tags.delete_tag_from_question(question_id, tag_id)
     return redirect(f'/question_detail/{question_id}')
+
+
+@app.route('/tags', methods=['GET'])
+def route_show_tags():
+    tags = dm_tags.get_tags_and_count()
+    return render_template('tag.html', tags=tags)
