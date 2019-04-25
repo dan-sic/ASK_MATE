@@ -44,7 +44,7 @@ def route_edit_comment():
         return redirect(f"/question_detail/{question_id['question_id']}")
     return render_template('comment.html', comment=comment)
 
-
+# todo = change to delete method
 @app.route('/comment/delete', methods=['GET'])
 def route_delete_comment():
     comment_id = request.args.get('comment_id')

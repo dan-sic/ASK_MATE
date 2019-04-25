@@ -25,6 +25,17 @@ def get_5_questions_sql_sorted_by_submission_time(cursor):
 
 @connection_handler
 def get_questions_sorted(cursor, order_by, order_direction):
+    # todo > make user validation
+    # do checks where table names / keywords are passed in url query
+    #
+    # if order_by not in ['id', 'votes', ...]:
+    #     raise ValueError()
+    #
+    # if asc:
+    #     order_direction = 'ASC'
+    # else:
+    #     order_direction = 'DESC'
+    #
     cursor.execute(f"""
                     SELECT question.*, users.username FROM question
                     LEFT JOIN users ON users_id = users.id ORDER BY {order_by} {order_direction}

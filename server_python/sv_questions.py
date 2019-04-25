@@ -78,6 +78,9 @@ def route_question_edit():
 @app.route('/question/<question_id>/vote', methods=['PUT'])
 def question_change_vote(question_id):
     value_to_change_vote = request.get_json()['voteValue']
+    # todo > make check here
+    # if value_to_change_vote not in [1, -1]:
+    #     return "Policja już jedzie"
     new_vote_value = dm_questions.change_question_vote(question_id, value_to_change_vote)
     return jsonify(new_vote_value)
 

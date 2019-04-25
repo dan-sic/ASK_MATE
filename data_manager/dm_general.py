@@ -5,6 +5,7 @@ from psycopg2 import sql
 
 @connection_handler
 def update_image_path(cursor, table, filename, id):
+    # todo > change the image pathname to more secure
     cursor.execute(f"""
                     UPDATE {table} 
                     SET image = 'images/{filename}' WHERE id={id}
