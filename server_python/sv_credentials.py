@@ -21,14 +21,15 @@ def login():
     form = forms.LoginForm()
     if form.validate_on_submit():
         user_data = dm_credentials.get_user_data(form.email.data)
-        is_user_email = bool(user_data['email'])
-        hashed_password = user_data['password']
-        is_valid_password = config.bcrypt.check_password_hash(hashed_password, form.password.data)
-        if is_user_email and is_valid_password:
-            user_id = user_data['id']
-            session['user_id'] = user_id
-            flash('You logged in!', 'success')
-            return redirect('/')
+        if user_data:
+            is_user_email = bool(user_data['email'])
+            hashed_password = user_data['password']
+            is_valid_password = config.bcrypt.check_password_hash(hashed_password, form.password.data)
+            if is_user_email and is_valid_password:
+                user_id = user_data['id']
+                session['user_id'] = user_id
+                flash('You logged in!', 'success')
+                return redirect('/')
         else:
             flash('Invalid credentials!', 'danger')
             return redirect('/login')
