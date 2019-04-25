@@ -12,7 +12,7 @@ def register():
         hashed_password = config.bcrypt.generate_password_hash(form_data.password.data).decode('utf-8')
         dm_credentials.register_user(form_data, hashed_password)
         flash(f'Account created for {form_data.name.data}!', 'success')
-        return redirect('/')
+        return redirect('/login')
     return render_template('register.html', form=form_data, title='Register')
 
 

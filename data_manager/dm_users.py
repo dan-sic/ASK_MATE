@@ -1,6 +1,4 @@
 from connection import connection_handler
-import datetime
-from data_manager import dm_general
 
 
 @connection_handler
@@ -10,6 +8,54 @@ def get_users(cursor):
                     """)
     users = cursor.fetchall()
     return users
+
+
+@connection_handler
+def get_user(cursor, user_id):
+    cursor.execute("""
+                    SELECT * FROM users
+                    WHERE id=%(id)s
+                    """,
+                   {'id': user_id})
+    user = cursor.fetchone()
+    return user
+
+
+@connection_handler
+def get_user_questions(cursor, user_id):
+    cursor.execute("""
+                    SELECT * FROM question
+                    WHERE users_id=%(id)s
+                    """,
+                   {'id': user_id})
+    questions = cursor.fetchall()
+    return questions, len(questions)
+
+
+@connection_handler
+def get_user_answers_wth_corresponding_question_titles(cursor, user_id):
+    cursor.execute("""
+                    SELECT answer.*, question.title as question_title
+                    FROM answer LEFT JOIN question
+                    ON answer.question_id=question.id
+                    WHERE answer.users_id=%(id)s
+                    """,
+                   {'id': user_id})
+    answers = cursor.fetchall()
+    return answers, len(answers)
+
+
+@connection_handler
+def get_user_comments_with_corresponding_question(cursor, user_id):
+    cursor.execute("""
+                    SELECT comment.*, question.title as question_title
+                    FROM comment LEFT JOIN question
+                    ON comment.question_id=question.id
+                    WHERE comment.users_id=%(id)s
+                    """,
+                   {'id': user_id})
+    comments = cursor.fetchall()
+    return comments, len(comments)
 
 
 @connection_handler
