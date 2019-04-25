@@ -1,5 +1,5 @@
 from server_python.config import app
-from data_manager import dm_general, dm_answers, dm_questions
+from data_manager import dm_general, dm_answers, dm_questions, dm_users
 from flask import redirect, request, render_template, jsonify, session
 
 
@@ -40,6 +40,10 @@ def answer_accept(answer_id, question_id):
     if 'user_id' in session:
         if session['user_id'] == dm_questions.qet_users_id_by_question_id(question_id):
             dm_answers.accept_answer(answer_id, 1)
+            reputation_value = 15
+            users_id = dm_answers.qet_users_id_by_answer_id(answer_id)
+            if users_id:
+                dm_users.update_user_reputation(users_id, reputation_value)
     return redirect('/question_detail/' + question_id)
 
 
@@ -51,20 +55,15 @@ def answer_unaccept(answer_id, question_id):
     return redirect('/question_detail/' + question_id)
 
 
-@app.route('/answer/<answer_id>/vote-down/<question_id>')
-def answer_vote_down(answer_id, question_id):
-    dm_general.change_vote("answer", answer_id, -1)
-    return redirect('/question_detail/' + question_id)
-
-
-@app.route('/answer/<answer_id>/vote-up/<question_id>')
-def answer_vote_up(answer_id, question_id):
-    dm_general.change_vote("answer", answer_id, 1)
-    return redirect('/question_detail/' + question_id)
-
-
 @app.route('/answer/<answer_id>/vote', methods=['PUT'])
 def answer_change_vote(answer_id):
     value_to_change_vote = request.get_json()['voteValue']
     new_vote_value = dm_answers.change_answer_vote(answer_id, value_to_change_vote)
+    if value_to_change_vote > 0:
+        reputation_value = 10
+    else:
+        reputation_value = -2
+    users_id = dm_answers.qet_users_id_by_answer_id(answer_id)
+    if users_id:
+        dm_users.update_user_reputation(users_id, reputation_value)
     return jsonify(new_vote_value)
