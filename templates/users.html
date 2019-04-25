@@ -31,7 +31,7 @@
                     {% for user in users  %}
                     <tr>
                         <td>{{ loop.index }} </td>
-                        <td>{{ user['username'] }} </td>
+                        <td><a href="{{ url_for('user_page', user_id=user['id']) }}">{{ user['username'] }} </a></td>
                         <td>{{ user['email'] }} </td>
                         <td>{{ user['name'] }} </td>
                         <td>{{ user['reputation'] }} </td>

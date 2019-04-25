@@ -34,7 +34,7 @@
                     <td>{{ loop.index }} </td>
                     <td><a href="question_detail/{{ question['id'] }}">{{ question['title'] }} </a></td>
                     {%  if question['users_id'] %}
-                        <td><a href="/user/{{ question['users_id'] }}">{{ question['username'] }} </a></td>
+                        <td><a href="{{ url_for('user_page', user_id=question['users_id']) }}">{{ question['username'] }} </a></td>
                     {% else %}
                         <td>{{ question['username'] }} </td>
                     {% endif %}
