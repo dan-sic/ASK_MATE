@@ -83,7 +83,7 @@
                 <div class="list-group-item border-bottom">
                     <a href="/question_detail/{{ comment['question_id'] }}">{{ comment['question_title'] }}</a>
                     <span class="mt-2 d-block">
-                        {{ comment['message'] }}
+                        {{ truncate_fn(comment['message'], 100) }}
                     </span>
                 </div>
             {% endfor %}

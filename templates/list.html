@@ -45,7 +45,7 @@
                         {% else %}
                             <td>{{ question['username'] }} </td>
                         {% endif %}
-                        <td>{{ truncate_fn(question['message'], 'list') }} </td>
+                        <td>{{ truncate_fn(question['message'], 500) }} </td>
                         <td>{{ question['submission_time'] }} </td>
                         <td>{{ question['view_number'] }} </td>
                         <td>{{ question['vote_number'] }} </td>

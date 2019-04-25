@@ -21,14 +21,13 @@ def highlight_search_term(searched_term, sequence):
     return new_sequence
 
 
-def truncate_question(question_message, list_type):
-    max_length = 250 if list_type == 'home' else 500
+def truncate_question(question_message, max_length):
     if len(question_message) > max_length:
         return question_message[:max_length] + ' (...)'
     else:
         return question_message
 
-
+# todo > unused parameters, wrong placement of function, fix it
 def change_reputation(user_id, value):
     cursor.execute("""
                     UPDATE question

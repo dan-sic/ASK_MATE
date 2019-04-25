@@ -1,7 +1,7 @@
 from server_python.config import app
 from data_manager import dm_users
-# from flask import render_template
-from flask import request, redirect, render_template, jsonify
+from flask import request, render_template
+from util import truncate_question
 
 
 @app.route('/users_list', methods=['GET', 'POST'])
@@ -33,4 +33,5 @@ def user_page():
                            comments=user_comments,
                            questions_count=questions_count,
                            answers_count=answers_count,
-                           comments_count=comments_count)
+                           comments_count=comments_count,
+                           truncate_fn=truncate_question)
