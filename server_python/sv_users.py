@@ -23,4 +23,11 @@ def route_sort_users():
 def user_page():
     user_id = request.args.get('user_id')
     user_data = dm_users.get_user(user_id)
-    return render_template('user_page.html', user=user_data)
+    user_questions = dm_users.get_user_questions(user_id)
+    user_answers = dm_users.get_user_answers(user_id)
+    user_comments = dm_users.get_user_comments(user_id)
+    return render_template('user_page.html',
+                           user=user_data,
+                           questions=user_questions,
+                           answers=user_answers,
+                           comments=user_comments)
