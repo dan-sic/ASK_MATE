@@ -29,7 +29,7 @@ def get_user_questions(cursor, user_id):
                     """,
                    {'id': user_id})
     questions = cursor.fetchall()
-    return questions
+    return questions, len(questions)
 
 
 @connection_handler
@@ -40,7 +40,7 @@ def get_user_answers(cursor, user_id):
                     """,
                    {'id': user_id})
     answers = cursor.fetchall()
-    return answers
+    return answers, len(answers)
 
 
 @connection_handler
@@ -51,7 +51,7 @@ def get_user_comments(cursor, user_id):
                     """,
                    {'id': user_id})
     comments = cursor.fetchall()
-    return comments
+    return comments, len(comments)
 
 
 @connection_handler

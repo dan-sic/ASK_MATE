@@ -1,10 +1,88 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>$Title$</title>
-</head>
-<body>
-$END$
-</body>
-</html>
+{% extends "layout.html" %}
+{% block contents %}
+<div class="container mt-5 mb-4">
+    <div class="card">
+        <h1 class="card-header display-5">{{ user['name'] }}</h1>
+        <div class="card-body">
+            <div class="container mb-4">
+                <div class="row">
+                    <div class="col-md-2 user-image">
+                        <div class="user-image__wrapper-question">
+                            {% if question['image'] %}
+                                <img src="{{ url_for('static', filename=question['image']) }}" alt="User image" class="img-thumbnail user-image__image">
+                            {% else %}
+                                <img src="http://placehold.it/80" alt="Example image" class="img-thumbnail user-image__image">
+                            {% endif %}
+                        </div>
+                        <form class="md-form" method=POST enctype=multipart/form-data action='{{ url_for('upload', question_id=question['id']) }}'>
+                          <div class="file-field file-input">
+                              <div class="file-path-wrapper file-input__wrapper">
+                                  <input class="text-small" type="text" placeholder="Add image">
+                                    <input type="file" name="photo">
+                                </div>
+                            <button class="btn-floating btn-sm blue-gradient mt-0 file-input__submit" type="submit">
+                              <i class="fas fa-cloud-upload-alt" aria-hidden="true"></i>
+                            </button>
+                          </div>
+                        </form>
+                    </div>
+                    <div class="col-md-7">
+                        <p class="lead">This user has not added description</p>
+                    </div>
+                    <div class="col-md-3">
+                        <p class="lead mb-3">Reputation: {{ user['reputation'] }}</p>
+                        <small class="text-muted d-block mb-2">
+                            Questions: {{ questions_count }}
+                        </small>
+                        <small class="text-muted d-block mb-2">
+                            Answers: {{ answers_count }}
+                        </small>
+                        <small class="text-muted d-block mb-2">
+                            Comments: {{ comments_count }}
+                        </small>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+    <div class="container mb-3">
+        <div class="list-group">
+            <div class="list-group-item bg-info text-white">
+                <i class="fas fa-comment mr-2 text-white"></i>Questions
+                <span class="badge badge-light float-right">{{ questions_count }}</span>
+            </div>
+            {% for question in questions %}
+                <div class="list-group-item mb-3 border-bottom-1">
+                    {{ question['title'] }}
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+    <div class="container mb-3">
+        <div class="list-group">
+            <div class="list-group-item bg-info text-white">
+                <i class="fas fa-comment mr-2 text-white"></i>Answers
+                <span class="badge badge-light float-right">{{ answers_count }}</span>
+            </div>
+            {% for answer in answers %}
+                <div class="list-group-item mb-3 border-bottom-1">
+                    {{ answer['title'] }}
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+    <div class="container mb-3">
+        <div class="list-group">
+            <div class="list-group-item bg-info text-white">
+                <i class="fas fa-comment mr-2 text-white"></i>Comments
+                <span class="badge badge-light float-right">{{ comments_count }}</span>
+            </div>
+            {% for comment in comments %}
+                <div class="list-group-item mb-3 border-bottom-1">
+                    {{ comment['title'] }}
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+{% endblock %}
