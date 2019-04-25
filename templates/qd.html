@@ -150,16 +150,20 @@
                             {% endif %}
 
                             <h5 class="card-title">
-                                Answer # {{ loop.index }} Posted by:
-                                {%-  if answer['users_id'] -%}
-                                    <td><a href="/user/{{ answer['users_id'] }}"> {{ answer['username'] }} </a></td>
-                                {% else %}
-                                    <td> {{ answer['username'] }} </td>
+                                Answer # {{ loop.index }}
+                                {%- if answer['is_accepted'] %}
+                                    <span class="badge badge-success">Verified</span>
                                 {% endif %}
                             </h5>
                             <p class="card-text">{{ answer['message'] }}</p>
                             <small class="text-muted d-block mt-5">
                                 Posted on: {{ answer['submission_time'] }}
+                                Posted by:
+                                {%-  if answer['users_id'] -%}
+                                    <td><a href="/user/{{ answer['users_id'] }}"> {{ answer['username'] }} </a></td>
+                                {% else %}
+                                    <td> {{ answer['username'] }} </td>
+                                {% endif %}
                             </small>
 
                             <div class="mt-2">
