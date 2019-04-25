@@ -4,7 +4,7 @@ import datetime
 
 
 @connection_handler
-def get_all_questions_sql_sorted_by_submission_time(cursor): #SELECT * FROM question ORDER BY submission_time DESC
+def get_all_questions_sql_sorted_by_submission_time(cursor):
     cursor.execute("""
                     SELECT q.*, u.username FROM question as q 
                     LEFT JOIN users as u ON q.users_id = u.id ORDER BY submission_time DESC
@@ -45,6 +45,16 @@ def get_question_sql_by_id(cursor, id):
         return list_with_question[0]
     else:
         return None
+
+
+@connection_handler
+def qet_users_id_by_question_id(cursor, question_id):
+    cursor.execute("""
+                    SELECT users_id FROM question WHERE id=%(question_id)s
+                    """,
+                    {"question_id": question_id})
+    question = cursor.fetchone()
+    return question['users_id']
 
 
 @connection_handler

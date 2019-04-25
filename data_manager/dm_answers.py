@@ -8,7 +8,8 @@ def get_all_sql_answers_by_question_id(cursor, question_id):
     cursor.execute("""
                     SELECT answer.*, users.username FROM answer
                     LEFT JOIN users ON answer.users_id = users.id
-                    WHERE question_id=%(question_id)s
+                    WHERE question_id=%(question_id)s 
+                    ORDER BY is_accepted DESC, vote_number DESC, submission_time ASC
                     """,
                     {"question_id": question_id})
     answers = cursor.fetchall()
@@ -29,8 +30,8 @@ def qet_answer_by_id(cursor, answer_id):
 def add_sql_answer(cursor, form_data, question_id, user_id):
     time = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
     cursor.execute("""
-                    INSERT INTO answer (users_id, submission_time, vote_number, question_id, message)
-                    VALUES (%(users_id)s, %(time)s, 0, %(question_id)s, %(answer)s)
+                    INSERT INTO answer (users_id, submission_time, vote_number, question_id, is_accepted, message)
+                    VALUES (%(users_id)s, %(time)s, 0, %(question_id)s, 0, %(answer)s)
                     """, {'time': time, 'question_id': question_id, 'answer': form_data['answer'], 'users_id': user_id})
 
 
@@ -69,3 +70,12 @@ def change_answer_vote(cursor, answer_id, value_to_change_vote):
                     """, {'answer_id': answer_id})
     new_vote_number = cursor.fetchone()
     return new_vote_number
+
+
+@connection_handler
+def accept_answer(cursor, answer_id, is_accepted):
+    cursor.execute(
+        """
+            UPDATE answer SET is_accepted=%(is_accepted)s WHERE id=%(answer_id)s
+        """, {"is_accepted": is_accepted, "answer_id": answer_id}
+    )

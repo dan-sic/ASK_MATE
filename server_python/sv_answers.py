@@ -1,5 +1,5 @@
 from server_python.config import app
-from data_manager import dm_general, dm_answers
+from data_manager import dm_general, dm_answers, dm_questions
 from flask import redirect, request, render_template, jsonify, session
 
 
@@ -33,6 +33,22 @@ def route_new_answer():
         dm_answers.add_sql_answer(request.form, question_id, user_id)
         return redirect('/question_detail/' + question_id)
     return render_template('answer.html', question_id=question_id)
+
+
+@app.route('/answer/<answer_id>/accept/<question_id>')
+def answer_accept(answer_id, question_id):
+    if 'user_id' in session:
+        if session['user_id'] == dm_questions.qet_users_id_by_question_id(question_id):
+            dm_answers.accept_answer(answer_id, 1)
+    return redirect('/question_detail/' + question_id)
+
+
+@app.route('/answer/<answer_id>/unaccept/<question_id>')
+def answer_unaccept(answer_id, question_id):
+    if 'user_id' in session:
+        if session['user_id'] == dm_questions.qet_users_id_by_question_id(question_id):
+            dm_answers.accept_answer(answer_id, 0)
+    return redirect('/question_detail/' + question_id)
 
 
 @app.route('/answer/<answer_id>/vote-down/<question_id>')
