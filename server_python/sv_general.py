@@ -13,6 +13,9 @@ def upload():
         try:
             filename = photos.save(request.files['photo'])
         except Exception:
+            # todo > check if exception needed and what type
+            # import traceback
+            # traceback.print_exc()
             return redirect('/question_detail/' + question_id)
 
         id = answer_id if answer_id else question_id

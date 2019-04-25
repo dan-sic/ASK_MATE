@@ -37,7 +37,7 @@
             </small>
             <small class="text-muted d-block">
                 Posted by:
-                {%-  if question['users_id'] -%}
+                {%  if question['users_id'] %}
                     <td><a href="{{ url_for('user_page', user_id=question['users_id']) }}"> {{ question['username'] }} </a></td>
                 {% else %}
                     <td> {{ question['username'] }} </td>
@@ -159,7 +159,7 @@
                             <small class="text-muted d-block mt-5">
                                 Posted on: {{ answer['submission_time'] }}
                                 Posted by:
-                                {%-  if answer['users_id'] -%}
+                                {%  if answer['users_id'] %}
                                     <td><a href="{{ url_for('user_page', user_id=answer['users_id']) }}"> {{ answer['username'] }} </a></td>
                                 {% else %}
                                     <td> {{ answer['username'] }} </td>
@@ -192,7 +192,7 @@
                                             <small class="text-muted d-block">
                                                 Posted by:
                                                 {%-  if comment['users_id'] -%}
-                                                    <td><a href="/user/{{ comment['users_id'] }}"> {{ comment['username'] }} </a></td>
+                                                    <td><a href="{{ url_for('user_page', user_id=comment['users_id']) }}"> {{ comment['username'] }} </a></td>
                                                 {% else %}
                                                     <td> {{ comment['username'] }} </td>
                                                 {% endif %}
