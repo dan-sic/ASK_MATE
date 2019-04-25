@@ -27,6 +27,16 @@ def qet_answer_by_id(cursor, answer_id):
 
 
 @connection_handler
+def qet_users_id_by_answer_id(cursor, answer_id):
+    cursor.execute("""
+                    SELECT users_id FROM answer WHERE id=%(answer_id)s
+                    """,
+                    {"answer_id": answer_id})
+    answer = cursor.fetchone()
+    return answer['users_id']
+
+
+@connection_handler
 def add_sql_answer(cursor, form_data, question_id, user_id):
     time = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
     cursor.execute("""

@@ -27,3 +27,12 @@ def truncate_question(question_message, list_type):
         return question_message[:max_length] + ' (...)'
     else:
         return question_message
+
+
+def change_reputation(user_id, value):
+    cursor.execute("""
+                    UPDATE question
+                    SET  title = %(title)s, message = %(message)s 
+                    WHERE id = %(id)s
+                    """,
+                   {'title': form_data['title'], 'message': form_data['message'], 'id': id})
