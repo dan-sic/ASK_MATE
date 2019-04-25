@@ -24,8 +24,8 @@ def user_page():
     user_id = request.args.get('user_id')
     user_data = dm_users.get_user(user_id)
     user_questions, questions_count = dm_users.get_user_questions(user_id)
-    user_answers, answers_count = dm_users.get_user_answers(user_id)
-    user_comments, comments_count = dm_users.get_user_comments(user_id)
+    user_answers, answers_count = dm_users.get_user_answers_wth_corresponding_question_titles(user_id)
+    user_comments, comments_count = dm_users.get_user_comments_with_corresponding_question(user_id)
     return render_template('user_page.html',
                            user=user_data,
                            questions=user_questions,

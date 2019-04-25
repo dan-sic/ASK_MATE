@@ -33,10 +33,12 @@ def get_user_questions(cursor, user_id):
 
 
 @connection_handler
-def get_user_answers(cursor, user_id):
+def get_user_answers_wth_corresponding_question_titles(cursor, user_id):
     cursor.execute("""
-                    SELECT * FROM answer
-                    WHERE users_id=%(id)s
+                    SELECT answer.*, question.title as question_title
+                    FROM answer LEFT JOIN question
+                    ON answer.question_id=question.id
+                    WHERE answer.users_id=%(id)s
                     """,
                    {'id': user_id})
     answers = cursor.fetchall()
@@ -44,10 +46,12 @@ def get_user_answers(cursor, user_id):
 
 
 @connection_handler
-def get_user_comments(cursor, user_id):
+def get_user_comments_with_corresponding_question(cursor, user_id):
     cursor.execute("""
-                    SELECT * FROM comment
-                    WHERE users_id=%(id)s
+                    SELECT comment.*, question.title as question_title
+                    FROM comment LEFT JOIN question
+                    ON comment.question_id=question.id
+                    WHERE comment.users_id=%(id)s
                     """,
                    {'id': user_id})
     comments = cursor.fetchall()
