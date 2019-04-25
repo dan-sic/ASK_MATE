@@ -141,7 +141,14 @@
                         <div class="p-4">
                             <a href="{{ url_for('route_delete_answer', answer_id=answer['id'], question_id=question['id']) }}" class="float-right pt-2"><i class="fas fa-trash text-danger"></i></a>
                             <a href="{{ url_for('route_edit_answer', answer_id=answer['id'], question_id=question['id']) }}" class="float-right mr-2 pt-2"><i class="fas fa-edit text-info"></i></a>
-                            <h5 class="card-title">Answer # {{ loop.index }}</h5>
+                            <h5 class="card-title">
+                                Answer # {{ loop.index }} Posted by:
+                                {%-  if answer['users_id'] -%}
+                                    <td><a href="/user/{{ answer['users_id'] }}"> {{ answer['username'] }} </a></td>
+                                {% else %}
+                                    <td> {{ answer['username'] }} </td>
+                                {% endif %}
+                            </h5>
                             <p class="card-text">{{ answer['message'] }}</p>
                             <small class="text-muted d-block mt-5">
                                 Posted on: {{ answer['submission_time'] }}

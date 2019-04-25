@@ -73,3 +73,14 @@ def delete_tag_from_question(cursor, question_id, tag_id):
                     WHERE question_id = %(question_id)s AND tag_id = %(tag_id)s;
                     """,
                    {'question_id': question_id, 'tag_id': tag_id})
+
+
+@connection_handler
+def get_tags_and_count(cursor):
+    cursor.execute("""
+                    SELECT tag.name, count(question_tag.question_id) as used FROM tag 
+                    LEFT JOIN question_tag ON tag.id = question_tag.tag_id
+                    GROUP BY tag.name;
+                    """)
+    tags = cursor.fetchall()
+    return tags
