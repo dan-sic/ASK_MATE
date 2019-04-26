@@ -26,7 +26,7 @@ def remove_image(cursor, table_name, resource_id):
 def search_results(cursor, search_term):
 
     cursor.execute("""
-            SELECT DISTINCT q.* FROM question q JOIN answer a ON q.id=a.question_id WHERE
+            SELECT DISTINCT q.* FROM question q LEFT JOIN answer a ON q.id=a.question_id WHERE
             UPPER(q.title) LIKE UPPER(%(search_term)s)
             OR UPPER(q.message) LIKE UPPER(%(search_term)s)
             OR UPPER(a.message) LIKE UPPER(%(search_term)s);

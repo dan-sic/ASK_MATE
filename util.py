@@ -16,8 +16,8 @@ def replace_string(matchobj):
 
 
 def highlight_search_term(searched_term, sequence):
-    # todo > use replace method; first argument in re.sum is regexp - this causes errors!
-    new_sequence = re.sub(searched_term, replace_string, sequence, flags=re.I)
+    searched_term_escaped = re.escape(r'{}'.format(searched_term))
+    new_sequence = re.sub(searched_term_escaped, replace_string, sequence, flags=re.I)
     return new_sequence
 
 
