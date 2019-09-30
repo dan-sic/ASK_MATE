@@ -1,14 +1,15 @@
-# wswp-ask-mate
-<h1>Askmate</h1>
+# ASK MATE
 
-<h3>Description</h3>
-<p>This webapplication was created for training purposes during course at codecool. Our team managed to deliver all of the user stories required by the sponsor.</p>
+## About App:
+This is a web application I've created as a part of a team, during Codecool course. The application provides ability for users to ask questions, which may be answered by other users.
 
-<h3>Resources used</h3>
-<p>
-  <ul>
-    <li>flask</li>
-    <li>postgresql</li>
-    <li>MDBootstrap</li>    
-  </ul>
-</p>
+## About the project:
+This is the project created during my education in Codecool. The goal was to practice creating web applications in Python using MVC model. 
+
+## Used technology:
+* Flask (micro web framework for Python)
+* HTML
+* CSS
+* Bootstrap
+* PostgreSQL
+* Psycopg (the most popular PostgreSQL database adapter for the Python)
